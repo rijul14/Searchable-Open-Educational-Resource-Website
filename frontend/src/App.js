@@ -1,6 +1,8 @@
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/home/home";
+import ContactUs from "./pages/contact_us/contact_us";
+import About from "./pages/about/about";
 import Header from "./components/header/header";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -11,7 +13,7 @@ import {
     Route,
     useHistory,
     Link,
-    Redirect
+    Redirect,
 } from "react-router-dom";
 
 function App() {
@@ -37,11 +39,11 @@ function App() {
                                 <Nav.Link as={Link} to={"/home"}>
                                     Home
                                 </Nav.Link>
-                                <Nav.Link as={Link} to={"/home/page2"}>
-                                    Page 2
+                                <Nav.Link as={Link} to={"/contact_us"}>
+                                    Contact us
                                 </Nav.Link>
-                                <Nav.Link as={Link} to={"/home/page3"}>
-                                    Page 3
+                                <Nav.Link as={Link} to={"/about"}>
+                                    About
                                 </Nav.Link>
                             </Nav>
                             <Nav>
@@ -59,13 +61,10 @@ function App() {
                     <Switch>
                         <Route path={"/home"} component={Home}></Route>
                         <Route
-                            path={"/home/page2"}
-                            // component={Component}
+                            path={"/contact_us"}
+                            component={ContactUs}
                         ></Route>
-                        <Route
-                            path={"/home/page3"}
-                            // component={Component}
-                        ></Route>
+                        <Route path={"/about"} component={About}></Route>
                         <Route
                             path={"/home/page4"}
                             // component={Component}
