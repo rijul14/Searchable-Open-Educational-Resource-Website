@@ -1,7 +1,7 @@
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import Home from "./pages/home/home"
-import Header from "./components/header/header"
+import Home from "./pages/home/home";
+import Header from "./components/header/header";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
@@ -11,6 +11,7 @@ import {
     Route,
     useHistory,
     Link,
+    Redirect
 } from "react-router-dom";
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
 
     return (
         <div className="App">
-            <Header/>
+            <Header />
             <Router history={history}>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                     <Container>
@@ -56,10 +57,7 @@ function App() {
                 </Navbar>
                 <div className="mh-100 h-100">
                     <Switch>
-                        <Route
-                            path={"/home"}
-                            component={Home}
-                        ></Route>
+                        <Route path={"/home"} component={Home}></Route>
                         <Route
                             path={"/home/page2"}
                             // component={Component}
@@ -76,6 +74,9 @@ function App() {
                             path={"/home/page5"}
                             // component={Component}
                         ></Route>
+                        <Route exact path={"/"}>
+                            <Redirect to={"/home"} />;
+                        </Route>
                     </Switch>
                 </div>
             </Router>
