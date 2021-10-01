@@ -3,15 +3,17 @@
 // const AWS = AWSXRay.captureAWS(require("aws-sdk"));
 // const { metricScope, Unit } = require("aws-embedded-metrics");
 // const DDB = new AWS.DynamoDB({ apiVersion: "2012-10-08" });
+require('dotenv').config();
 const AWS = require("aws-sdk");
+const {processQuery} = require("./processQuery");
 
 // environment variables
-const {TABLE_NAME, ENDPOINT_OVERRIDE, REGION} = process.env;
+const {TABLE_NAME, ENDPOINT_OVERRIDE, REGION, AWS_KEY_ID, AWS_KEY_SECRET} = process.env;
 const options = {region: "us-west-2"};
 AWS.config.update({
-  region: REGION,
-  accessKeyId: 'KEY_ID',
-  secretAccessKey: 'ACCESS_KEY',
+  region: "us-west-2",
+  accessKeyId: AWS_KEY_ID,
+  secretAccessKey: AWS_KEY_SECRET,
 });
 
 const isRunningLocally = () => 'true'
@@ -63,11 +65,11 @@ const updateParams = async (item, idAttributeName) => {
   }
 }
 
-const search = async (event, context) => {
+const search = async (event) => {
   try {
     console.log('Search received:', event);
     // const body = JSON.parse(event.body);
-    const body = {"skills": "auditiv"};
+    const body = {"q": "Presente", "author": "Myra"};
     console.log('Options', options, 'Table name', tableName);
 
     const params = {
