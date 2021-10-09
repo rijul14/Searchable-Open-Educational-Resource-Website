@@ -1,4 +1,6 @@
-export async function processQuery(body, params, docClient) {
+const headers = ['title', 'vocabulary', 'grammar', 'level', 'author', 'technology_used', 'skills']
+
+module.exports.processQuery = async function (query, params, docClient) {
   // const data = (await docClient.scan(params).promise()).Items;
   // let keyConditions = Object.entries(body).map(([key, val], _) => [key, val])
   //   .reduce((map, obj) => (map[obj[0]] = {
@@ -9,16 +11,33 @@ export async function processQuery(body, params, docClient) {
   //   KeyConditions :
   //     keyConditions
   // })
-  const queryTerm = Object.entries(body).map(([key, val], idx) => `contains(#k${idx}, :v${idx})`).join(" and ");
+  let q;
+  let qterm;
+  if ('q' in query) {
+    q = query.q;
+    delete query.q;
+    qterm = headers.map((header, _) => `contains(#${header}, :q)`).join(" or ");
+  }
+  let queryTerm = Object.entries(query).map(([key, val], idx) => `contains(#k${idx}, :v${idx})`).join(" and ");
+  if (typeof qterm !== 'undefined') {
+    if (queryTerm !== "") {
+      qterm = ` and (${qterm})`
+    }
+    queryTerm += qterm;
+  }
   Object.assign(params, {
     FilterExpression: queryTerm,
     ExpressionAttributeNames:
-      Object.entries(body).map(([key, val], _) => `_search_${key.toLowerCase()}`) // use the search columns
+      Object.entries(query).map(([key, val], _) => `_search_${key.toLowerCase()}`) // use the search columns
         .reduce((map, key, idx) => (map[`#k${idx}`] = key, map), {}),
     ExpressionAttributeValues:
-      Object.entries(body).map(([key, val], _) => val.toLowerCase())
+      Object.entries(query).map(([key, val], _) => val.toLowerCase())
         .reduce((map, val, idx) => (map[`:v${idx}`] = val, map), {}),
-  })
+  });
+  if (typeof q !== 'undefined') {
+    Object.assign(params.ExpressionAttributeNames, headers.reduce((map, header, _) => (map[`#${header}`] = header, map), {}));
+    params.ExpressionAttributeValues[':q'] = q;
+  }
   console.log("Query params:", params);
   const data = (await docClient.scan(params).promise()).Items;
   // console.log("Data from db", data);
