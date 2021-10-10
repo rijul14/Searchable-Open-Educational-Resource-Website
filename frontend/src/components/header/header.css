@@ -1,6 +1,24 @@
 .header {
-    padding: 20px;
-    height: 150px;
-    width: 100%;
-    
+  padding: 20px;
+  height: 150px;
+  width: 100%;
+}
+
+.col.one {
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+.col.one img {
+  margin-top: 35px;
+  float: left;
+}
+.col.two {
+  padding: 0px;
+}
+
+.col.two img {
+  float: right;
 }

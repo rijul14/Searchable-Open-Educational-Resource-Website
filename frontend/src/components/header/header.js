@@ -1,11 +1,21 @@
 import React from "react";
 import "./header.css"
-
+import DornsifeLogo from './DornsifeLogo.png';
+import Shield from './Shield.png'
 export default class Header extends React.Component {
     render() {
         return (
-        <div className="header align-middle">
-            <p>Put header content here</p>
-        </div>);
-    }
+            <div class="container-fluid">
+                <div class = "row flex-nowrap">
+                    <div class="col one">
+                    <img src={DornsifeLogo} height={150}/>
+                    </div>
+                    <div class="col two">
+                    <img src={Shield} height={250}/>
+                    </div>
+                </div>
+            </div>
+
+        
+        );}
 }

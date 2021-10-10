@@ -23,7 +23,7 @@ function App() {
         <div className="App">
             <Header />
             <Router history={history}>
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                <Navbar collapseOnSelect expand="lg" bg="black" variant="dark" class="navbar">
                     <Container>
                         {/* <Navbar.Brand
                             className="logo"
@@ -37,21 +37,15 @@ function App() {
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">
                                 <Nav.Link as={Link} to={"/home"}>
-                                    Home
-                                </Nav.Link>
-                                <Nav.Link as={Link} to={"/contact_us"}>
-                                    Contact us
-                                </Nav.Link>
-                                <Nav.Link as={Link} to={"/about"}>
-                                    About
+                                    oerinspanish
                                 </Nav.Link>
                             </Nav>
                             <Nav>
-                                <Nav.Link as={Link} to={"/home/page4"}>
-                                    Page 4
+                                <Nav.Link as={Link} to={"/contact_us"}>
+                                    contact us
                                 </Nav.Link>
-                                <Nav.Link as={Link} to={"/home/page5"}>
-                                    Page 5
+                                <Nav.Link as={Link} to={"/about"}>
+                                    about us
                                 </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
@@ -65,14 +59,6 @@ function App() {
                             component={ContactUs}
                         ></Route>
                         <Route path={"/about"} component={About}></Route>
-                        <Route
-                            path={"/home/page4"}
-                            // component={Component}
-                        ></Route>
-                        <Route
-                            path={"/home/page5"}
-                            // component={Component}
-                        ></Route>
                         <Route exact path={"/"}>
                             <Redirect to={"/home"} />;
                         </Route>
