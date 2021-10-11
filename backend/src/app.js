@@ -3,7 +3,7 @@
 // const AWS = AWSXRay.captureAWS(require("aws-sdk"));
 // const { metricScope, Unit } = require("aws-embedded-metrics");
 // const DDB = new AWS.DynamoDB({ apiVersion: "2012-10-08" });
-import {processQuery} from "./processQuery";
+const {processQuery} = require("./processQuery");
 
 const AWS = require("aws-sdk");
 
