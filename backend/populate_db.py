@@ -45,7 +45,7 @@ df.to_csv('out.csv', index=False)
 
 import boto3
 
-dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
+dynamodb = boto3.resource('dynamodb',region_name='us-west-2')
 
 
 def recreate_table():
@@ -83,16 +83,23 @@ def recreate_table():
 
     print(params)
     try:
-        dynamodb.Table('MainTable').delete()
+        table = dynamodb.Table('MainTable')
+        table.delete()
+        table.wait_until_not_exists()
+        print("Old table deleted")
     except:
         print("Table non-existent")
-    dynamodb.create_table(**params)
-    return params
+    print("Creating new table")
+    table = dynamodb.create_table(**params)
+    table.wait_until_exists()
+    print("New table created")
+    return table
 
 
-params = recreate_table()
+table = recreate_table()
 items = df.to_dict(orient='records')
-table = dynamodb.Table('MainTable')
-for i, d in enumerate(items):
-    d['id'] = str(i)
-    table.put_item(Item=d)
+# table = dynamodb.Table('MainTable')
+with table.batch_writer() as batch:
+    for i, d in enumerate(items):
+        d['id'] = str(i)
+        batch.put_item(Item=d)

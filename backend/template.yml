@@ -28,11 +28,11 @@ Resources:
       Policies:
         # Give Create/Read/Update/Delete Permissions to the MainTable
         - DynamoDBCrudPolicy:
-            TableName: !Ref MainTable
+            TableName: MainTable
       Environment:
         Variables:
           # Make table name accessible as environment variable from function code during execution
-          TABLE_NAME: !Ref MainTable
+          TABLE_NAME: MainTable
       Events:
         Api:
           Type: Api
@@ -119,15 +119,15 @@ Resources:
   # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlesssimpletable
 
   # DynamoDB table to store item: {id: &lt;ID&gt;, name: &lt;NAME&gt;}
-  MainTable:
-    Type: AWS::Serverless::SimpleTable
-    Properties:
-      PrimaryKey:
-        Name: id
-        Type: String
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
+#  MainTable:
+#    Type: AWS::Serverless::SimpleTable
+#    Properties:
+#      PrimaryKey:
+#        Name: id
+#        Type: String
+#      ProvisionedThroughput:
+#        ReadCapacityUnits: 10
+#        WriteCapacityUnits: 10
 
 Outputs:
   WebEndpoint:

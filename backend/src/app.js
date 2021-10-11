@@ -13,8 +13,8 @@ const options = {region: REGION};
 AWS.config.update({region: REGION});
 
 const isRunningLocally = () => process.env.AWS_SAM_LOCAL === 'true'
-// const tableName = process.env.TABLE_NAME;
-const tableName = "MainTable";
+const tableName = TABLE_NAME;
+// const tableName = "MainTable";
 
 if (ENDPOINT_OVERRIDE !== "") {
   options.endpoint = ENDPOINT_OVERRIDE;
