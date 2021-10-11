@@ -8,10 +8,10 @@ export default class Header extends React.Component {
             <div class="container-fluid">
                 <div class = "row flex-nowrap">
                     <div class="col one">
-                    <img src={DornsifeLogo} height={150}/>
+                    <img src={DornsifeLogo} alt="logo"height={150}/>
                     </div>
                     <div class="col two">
-                    <img src={Shield} height={250}/>
+                    <img src={Shield} alt="shield" height={250}/>
                     </div>
                 </div>
             </div>

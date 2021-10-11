@@ -1,0 +1,11 @@
+.body {
+  text-align: center;
+}
+.body p {
+  margin-top: 50px;
+  font-size: 25pt;
+}
+.body .info {
+  margin-top: 50px;
+  font-size: 15pt;
+}

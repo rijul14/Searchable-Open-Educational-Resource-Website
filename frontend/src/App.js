@@ -41,11 +41,11 @@ function App() {
                                 </Nav.Link>
                             </Nav>
                             <Nav>
-                                <Nav.Link as={Link} to={"/contact_us"}>
-                                    contact us
-                                </Nav.Link>
                                 <Nav.Link as={Link} to={"/about"}>
                                     about us
+                                </Nav.Link>
+                                <Nav.Link as={Link} to={"/contact_us"}>
+                                    contact us
                                 </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
