@@ -50,7 +50,7 @@ dynamodb = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
 
 def recreate_table():
     import json
-    with open('db.json', 'r') as fp:
+    with open('json/db.json', 'r') as fp:
         params = json.load(fp)
 
     # create GSIs
