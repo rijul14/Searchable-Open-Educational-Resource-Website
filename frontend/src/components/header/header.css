@@ -5,20 +5,10 @@
 }
 
 .col.one {
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding: 0px;
-}
-.col.one img {
-  margin-top: 35px;
-  float: left;
-}
-.col.two {
+  background-color: rgb(137, 28, 16);
   padding: 0px;
 }
 
-.col.two img {
+.col.one img {
   float: right;
 }

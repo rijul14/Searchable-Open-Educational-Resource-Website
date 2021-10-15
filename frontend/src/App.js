@@ -23,7 +23,7 @@ function App() {
         <div className="App">
             <Header />
             <Router history={history}>
-                <Navbar collapseOnSelect expand="lg" bg="black" variant="dark" class="navbar">
+                <Navbar collapseOnSelect expand="lg" class="navbar">
                     <Container>
                         {/* <Navbar.Brand
                             className="logo"
@@ -41,6 +41,9 @@ function App() {
                                 </Nav.Link>
                             </Nav>
                             <Nav>
+                                <Nav.Link as={Link} to={"/home"}>
+                                    home
+                                </Nav.Link>
                                 <Nav.Link as={Link} to={"/about"}>
                                     about us
                                 </Nav.Link>
