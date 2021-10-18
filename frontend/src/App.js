@@ -4,6 +4,7 @@ import Home from "./pages/home/home";
 import ContactUs from "./pages/contact_us/contact_us";
 import About from "./pages/about/about";
 import Header from "./components/header/header";
+import Footer from "./components/footer/footer";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
@@ -68,7 +69,9 @@ function App() {
                     </Switch>
                 </div>
             </Router>
+            <Footer />    
         </div>
+        
     );
 }
 

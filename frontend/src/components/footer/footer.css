@@ -1,0 +1,17 @@
+.footer {
+  left: 0;
+  bottom: 0;
+  right: 0;
+  align-self: end;
+}
+
+.col.onee {
+  background-color: rgb(57, 57, 57);
+  color: white;
+  padding: 0px;
+}
+.col.two {
+  background-color: rgb(57, 57, 57);
+  color: white;
+  padding: 0px;
+}

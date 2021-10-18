@@ -4,7 +4,7 @@
 }
 
 .navbar {
-  background-color: rgb(248, 249, 250);
+  background-color: rgb(255, 255, 255);
   font-size: 15pt;
-  border-bottom: 2px solid rgb(205, 205, 205);
+  border-bottom: 1px solid rgb(128, 128, 128);
 }
