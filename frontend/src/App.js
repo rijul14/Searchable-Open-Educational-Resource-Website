@@ -4,6 +4,7 @@ import Home from "./pages/home/home";
 import ContactUs from "./pages/contact_us/contact_us";
 import About from "./pages/about/about";
 import Header from "./components/header/header";
+import Search from "./pages/search/search";
 import Footer from "./components/footer/footer";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -43,13 +44,16 @@ function App() {
                             </Nav>
                             <Nav>
                                 <Nav.Link as={Link} to={"/home"}>
-                                    home
+                                    pågina principal
+                                </Nav.Link>
+                                <Nav.Link as={Link} to={"/search"}>
+                                    buscar
                                 </Nav.Link>
                                 <Nav.Link as={Link} to={"/about"}>
-                                    about us
+                                    ¿quiénes somos?
                                 </Nav.Link>
                                 <Nav.Link as={Link} to={"/contact_us"}>
-                                    contact us
+                                    cantacto
                                 </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
@@ -58,6 +62,7 @@ function App() {
                 <div className="mh-100 h-100">
                     <Switch>
                         <Route path={"/home"} component={Home}></Route>
+                        <Route path={"/search"} component={Search}></Route>
                         <Route
                             path={"/contact_us"}
                             component={ContactUs}
