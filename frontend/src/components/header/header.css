@@ -4,11 +4,20 @@
   width: 100%;
 }
 
-.col.one {
+.col.twoo {
   background-color: rgb(137, 28, 16);
   padding: 0px;
 }
+.col.oone {
+  background-color: rgb(137, 28, 16);
+  padding: 0px;
+}
+.col.oone p {
+  margin-top: 25px;
+  margin-left: 10px;
+  color: white;
+}
 
-.col.one img {
+.col.twoo img {
   float: right;
 }

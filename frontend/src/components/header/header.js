@@ -6,7 +6,14 @@ export default class Header extends React.Component {
         return (
             <div class="container-fluid">
                 <div class = "row flex-nowrap">
-                    <div class="col one">
+                    <div class="col oone">
+                         <p>
+                        Departamento de Culturas Latinoamericano e Ibéricas <br />
+                        Programa básico de lengua española<br />
+                        oerin.spanish@usc.edu<br />
+                        </p>
+                    </div>
+                    <div class="col twoo">
                     <img src={USClogo} alt="logo"height={150}/>
                     </div>
                 </div>
