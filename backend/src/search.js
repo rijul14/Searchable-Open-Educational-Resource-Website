@@ -1,7 +1,9 @@
 const {Document} = require("flexsearch");
 const searchHeaders = ['title', 'vocabulary', 'grammar', 'level', 'author', 'technology_used', 'skills'];
-const param_settings = ['limit', 'offset'];
 module.exports.searchHeaders = searchHeaders;
+const param_settings = ['limit', 'offset'];
+const searchTableName = "SearchTable";
+const searchDbId = "_id";
 
 let docIndex;
 const indexOptions = {
@@ -68,32 +70,54 @@ module.exports.processQueryDynamo = async function (query, params, docClient) {
 const isObjEmpty = obj => Object.keys(obj).length === 0;
 
 const indexDocs = async (docClient, tableName) => {
-  const start = new Date().getTime();
+  let start = new Date().getTime();
   const docIndex = new Document(indexOptions);
   const data = (await docClient.scan({TableName: tableName}).promise()).Items;
-  data.forEach(item => {
-    docIndex.add(item);
-  });
+  data.forEach(item => docIndex.add(item));
   console.log("Indexing took", new Date().getTime() - start, 'ms');
-  await docIndex.export((key, data) => {
-    console.log("Index key:", key);
-    // localStorage.setItem(key, data);
-  });
+
+  // todo temporary, skip store/load of index until documents are stored as well
+  // start = new Date().getTime();
+  // const exportItem = {[searchDbId]: "flexsearch"};
+  // await docIndex.export((key, data) => {
+  //   console.log("Index key:", key);
+  //   // localStorage.setItem(key, data);
+  //   exportItem[key] = data;
+  // });
+  // await docClient.put({TableName: searchTableName, Item: exportItem}).promise();
+  // console.log("Exporting took", new Date().getTime() - start, 'ms');
+
   return docIndex;
 }
 
-const loadIndex = (docClient) => {
-  // const keys = Object.keys(localStorage);
-  // const docIndex = new Document(indexOptions);
+const loadIndex = async (docClient) => {
+  return null; // todo temporary, skip store/load of index until documents are stored as well
+  let start = new Date().getTime();
+  const docIndex = new Document(indexOptions);
+  try{
+    const indexResult = (await docClient.get({TableName: searchTableName, Key: {[searchDbId]: "flexsearch"}}).promise()).Item;
+    if (!indexResult) {
+      console.log("Index not found in db");
+      return null;
+    }
+    for (const [key, val] of Object.entries(indexResult)) {
+      if (key === searchDbId) continue;
+      docIndex.import(key, val);
+    }
+  }catch (e) {
+    console.error("Error loading index from db", e);
+    return null;
+  }
+  console.log("Loading index from DB took", new Date().getTime() - start, 'ms');
+  return docIndex;
   // for(let i = 0, key; i < keys.length; i++){
   //   key = keys[i];
   //   docIndex.import(key, localStorage.getItem(key));
   // }
- // return docIndex;
-  return null;
 }
 
 const getDocIndex = async (docClient, tableName) => {
+  console.log("Getting doc index");
   if (typeof docIndex === 'undefined') {
     docIndex = await loadIndex(docClient);
     if (!docIndex) {
@@ -162,6 +186,7 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
         }
       }
     }
+    if (result.length === 0) return [];
     if (true) { // todo intersection option
       // intersect all results to get AND behavior, removed from flexsearch :(
       result = [{result: result.map(res => {

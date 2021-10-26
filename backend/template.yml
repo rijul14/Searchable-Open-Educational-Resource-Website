@@ -20,7 +20,7 @@ Resources:
   search:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/app.search
+      Handler: src/lambda.search
       Runtime: nodejs14.x
       MemorySize: 128
       Timeout: 100
