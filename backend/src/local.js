@@ -5,7 +5,8 @@
 // const DDB = new AWS.DynamoDB({ apiVersion: "2012-10-08" });
 require('dotenv').config();
 const AWS = require("aws-sdk");
-const {processQuery} = require("./processQuery");
+const {processQueryDynamo, searchHeaders, processQueryFlex, getDocIndex} = require("./search");
+const { Index, Document, Worker } = require("flexsearch");
 
 // environment variables
 const {TABLE_NAME, ENDPOINT_OVERRIDE, REGION, AWS_KEY_ID, AWS_KEY_SECRET} = process.env;
@@ -29,6 +30,7 @@ if (ENDPOINT_OVERRIDE !== "") {
 options.endpoint = 'http://127.0.0.1:8000';
 
 const docClient = new AWS.DynamoDB.DocumentClient(options);
+
 // response helper
 const jsonResponse = (statusCode, body, additionalHeaders) => ({
   statusCode,
@@ -69,7 +71,7 @@ const search = async (event) => {
   try {
     console.log('Search received:', event);
     // const body = JSON.parse(event.body);
-    const body = {"q": "Presente", "author": "Myra"};
+    const body = {"q": "basico"};
     console.log('Options', options, 'Table name', tableName);
 
     const params = {
@@ -77,7 +79,7 @@ const search = async (event) => {
     };
     console.log('Search request json', body);
 
-    const data = await processQuery(body, params, docClient);
+    const data = await processQueryFlex(body, docClient, tableName);
 
     return jsonResponse(200, data);
   } catch (e) {
