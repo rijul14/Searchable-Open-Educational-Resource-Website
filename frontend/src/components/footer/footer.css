@@ -3,15 +3,20 @@
   bottom: 0;
   right: 0;
   align-self: end;
+  background-color: rgb(57, 57, 57);
 }
 
 .col.onee {
-  background-color: rgb(57, 57, 57);
+  /* background-color: rgb(57, 57, 57); */
   color: white;
   padding: 0px;
 }
-.col.two {
-  background-color: rgb(57, 57, 57);
+.col .twwo {
+  /* background-color: rgb(57, 57, 57); */
   color: white;
   padding: 0px;
+}
+
+.col .twwo img {
+  float: right;
 }
