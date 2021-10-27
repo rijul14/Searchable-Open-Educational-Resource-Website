@@ -53,7 +53,7 @@ export default class Home extends React.Component {
                         <div className="p-4 h-100">
                         <div className="searchBar">
                             <input placeholder={"Search keywords..."}></input>
-                            <button className="btn btn-primary">Search</button>
+                            <button className="btn btn-primary searchButton">Search</button>
                         </div>
                             {/* form with a checklist */}
                             <Category category="Tecnología" options={["Video", "Peardeck", "Google Form", "Quizlet"]}></Category>

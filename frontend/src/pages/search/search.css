@@ -11,7 +11,7 @@
   padding: 10px;
 }
 
-button {
+.searchButton {
   background-color: rgb(137, 28, 16) !important;
   border-color: rgb(137, 28, 16) !important;
 }
