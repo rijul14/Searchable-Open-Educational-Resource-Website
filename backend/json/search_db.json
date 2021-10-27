@@ -1,19 +1,19 @@
 {
-  "TableName": "MainTable",
+  "TableName": "SearchTable",
   "KeySchema": [
     {
-      "AttributeName": "id",
+      "AttributeName": "_id",
       "KeyType": "HASH"
     }
   ],
   "AttributeDefinitions": [
     {
-      "AttributeName": "id",
+      "AttributeName": "_id",
       "AttributeType": "S"
     }
   ],
   "ProvisionedThroughput": {
-    "ReadCapacityUnits": 5,
+    "ReadCapacityUnits": 10,
     "WriteCapacityUnits": 5
   }
 }

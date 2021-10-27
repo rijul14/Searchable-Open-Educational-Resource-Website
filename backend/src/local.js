@@ -1,13 +1,6 @@
-// default imports, from https://github.com/aws-samples/lambda-refarch-webapp/
-// const AWSXRay = require("aws-xray-sdk-core");
-// const AWS = AWSXRay.captureAWS(require("aws-sdk"));
-// const { metricScope, Unit } = require("aws-embedded-metrics");
-// const DDB = new AWS.DynamoDB({ apiVersion: "2012-10-08" });
 require('dotenv').config();
 const AWS = require("aws-sdk");
-const {processQueryDynamo, searchHeaders, processQueryFlex, getDocIndex} = require("./search");
-const { Index, Document, Worker } = require("flexsearch");
-
+const {processQueryFlex} = require("./search");
 // environment variables
 const {TABLE_NAME, ENDPOINT_OVERRIDE, REGION, AWS_KEY_ID, AWS_KEY_SECRET} = process.env;
 const options = {region: "us-west-2"};
@@ -20,15 +13,7 @@ AWS.config.update({
 const isRunningLocally = () => 'true'
 // const tableName = process.env.TABLE_NAME;
 const tableName = "MainTable";
-
-if (ENDPOINT_OVERRIDE !== "") {
-  options.endpoint = ENDPOINT_OVERRIDE;
-} else if (isRunningLocally()) {
-  options.endpoint = 'http://dynamodb:8000';
-  // options.endpoint = 'http://docker.for.windows.localhost:8000';
-}
-options.endpoint = 'http://127.0.0.1:8000';
-
+options.endpoint = 'http://localhost:8000';
 const docClient = new AWS.DynamoDB.DocumentClient(options);
 
 // response helper
@@ -71,7 +56,7 @@ const search = async (event) => {
   try {
     console.log('Search received:', event);
     // const body = JSON.parse(event.body);
-    const body = {"q": "basico"};
+    const body = {"author": "myra"};
     console.log('Options', options, 'Table name', tableName);
 
     const params = {
