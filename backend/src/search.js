@@ -157,14 +157,28 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
     }
   }
 
-  param_settings.forEach(s => processParams(s));
-
+  let skipTransform = false;
   let result;
+  param_settings.forEach(s => processParams(s));
   if (isObjEmpty(query)) { // simple full text search
     params.enrich = true;
-    result = await docIndex.search(q, params);
-  } else { // per field queries
-    // params.bool = "and";
+    if (q.length === 0) { // display all results
+      result = Object.entries(docIndex.store).map(([key, val], _) => {
+        val.id = key;
+        return val;
+      });
+      if (params.offset) {
+        result = result.slice(0,params.offset);
+      }
+      if (params.limit) {
+        result = result.slice(0,params.limit);
+      }
+      skipTransform = true;
+    } else {
+      result = await docIndex.search(q, params);
+    }
+  }
+  else { // per field queries
     let qResult;
     if (q) {
       // searchList.push.apply(searchList, searchHeaders.map(val => ({...params, field: val, query: q})));
@@ -198,11 +212,21 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
       }
     }
   }
-  result = result.map(res => {
-    if (res.result && res.result.length > 0 && !isNaN(res.result[0])){ // not enriched, bug https://github.com/nextapps-de/flexsearch/issues/264
-      return res.result.map(id => docIndex.get(id));
-    } else return res.result;
-  }).flat(1); // flatten to 1d array
+  if (!skipTransform) {
+    result = result.map(res => {
+      if (res.result && res.result.length > 0 && !isNaN(res.result[0])){ // not enriched, bug https://github.com/nextapps-de/flexsearch/issues/264
+        return res.result.map(id => {
+          const doc = docIndex.get(id);
+          doc.id = id;
+          return doc;
+        });
+      } else return res.result.map(doc => {
+        doc.doc.id = doc.id;
+        return doc.doc;
+      });
+    }).flat(1); // flatten to 1d array
+  }
+
   console.log("Search params", params, `result (${result.length}):`, result);
   return result;
 }

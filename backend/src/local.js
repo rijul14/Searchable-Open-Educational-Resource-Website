@@ -56,7 +56,7 @@ const search = async (event) => {
   try {
     console.log('Search received:', event);
     // const body = JSON.parse(event.body);
-    const body = {"author": "myra"};
+    const body = {"q": ""};
     console.log('Options', options, 'Table name', tableName);
 
     const params = {
@@ -65,7 +65,6 @@ const search = async (event) => {
     console.log('Search request json', body);
 
     const data = await processQueryFlex(body, docClient, tableName);
-
     return jsonResponse(200, data);
   } catch (e) {
     console.error(e);

@@ -6,6 +6,6 @@ stack_name = "oerinspanish"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-9ndr18otod1j"
 s3_prefix = "oerinspanish"
 region = "us-west-2"
-confirm_changeset = true
+confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
 image_repositories = []

@@ -1,6 +1,6 @@
 import React from "react";
 import "./home.css";
-import mainPhoto from './mainPhoto.jpg';
+import {Link} from "react-router-dom";
 
 
 export default class Home extends React.Component {
@@ -17,7 +17,8 @@ export default class Home extends React.Component {
                         Recursos educativos de acceso libre <br/>
                         para la enseñanza del español <br/> <br/> <br/>
                         <div class="search" >
-                        búsqueda<br/>
+                            <Link style={{ color: 'inherit'}}
+                                  to="/search">búsqueda</Link><br/>
                         </div>
                     </div>
                 </div>
