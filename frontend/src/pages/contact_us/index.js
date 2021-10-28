@@ -1,56 +1,69 @@
 var express = require('express');
 var router = express.Router();
 var nodemailer = require('nodemailer');
+require('dotenv').config();
 var cors = require('cors');
 const creds = require('./config');
+var app= express();
+app.use(express.json());
+const port= 4000;
 
-var transport = {
-    host: 'http://localhost:3000/contact_us', // Don’t forget to replace with the SMTP host of your provider
-    port: 587,
+  app.use((request, response, next) => {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+  });
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp.mailtrap.io', 
+    port: 2525,
     auth: {
-    user: creds.USER,
-    pass: creds.PASS
-  }
-}
-
-var transporter = nodemailer.createTransport(transport)
-
-transporter.verify((error, success) => {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Server is ready to take messages');
-  }
-});
-
-router.post('/send', (req, res, next) => {
-  var name = req.body.name
-  var email = req.body.email
-  var message = req.body.message
-  var content = `name: ${name} \n email: ${email} \n message: ${message} `
-
-  var mail = {
-    from: name,
-    to: "mercan@usc.edu",  // Change to email address that you want to receive messages on
-    subject: 'New Message from Contact Form',
-    text: content
-  }
-
-  transporter.sendMail(mail, (err, data) => {
-    if (err) {
-      res.json({
-        status: 'fail'
-      })
-    } else {
-      res.json({
-       status: 'success'
-      })
+      user: 'f76615441a7641',
+      pass: '2448b6e186d6c9'
     }
-  })
-})
+  });
 
-const app = express()
-app.use(cors())
-app.use(express.json())
-app.use('/', router)
-app.listen(3000)
+ 
+
+
+  transporter.verify(function(error, success) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Server is ready to take our messages");
+    }
+  });
+
+app.post('/contact_us', (req, res, next) => {
+    var name = req.body.name
+    var email = req.body.email
+    var subject = req.body.subject
+    var message = req.body.message
+  
+    var mail = {
+      from: name,
+      to: 'jackzhan@usc.edu',//my regular email I used to sign up to mailtrap
+      subject: subject,
+      text: message
+    }
+  
+    transporter.sendMail(mail, (err, data) => {
+      if (err) {
+        console.log('failed', err);
+        res.json({
+          status: 'fail'
+        })
+      } else {
+        console.log('successful');
+        res.json({
+         status: 'success'
+        })
+      }
+    })
+  })
+
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+  })
+
+
