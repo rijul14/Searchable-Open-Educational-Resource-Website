@@ -19,7 +19,8 @@ export default class Home extends React.Component {
       }
 
       this.state = {
-        searchResults: []
+        searchResults: [],
+        searchQuery: "",
       }
 
       console.log("init");
@@ -45,6 +46,10 @@ export default class Home extends React.Component {
       await this.queryData({q: "", limit: "10"});
     }
 
+    setSearchQuery = (e) => {
+        this.setState({ searchQuery: e.target.value });
+    }
+
     render() {
         return (
             <div className="h-100">
@@ -52,8 +57,8 @@ export default class Home extends React.Component {
                     <Grid item xs={3}>
                         <div className="p-4 h-100">
                         <div className="searchBar">
-                            <input placeholder={"Search keywords..."}></input>
-                            <button className="btn btn-primary searchButton">Search</button>
+                            <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."}></input>
+                            <button onClick={async () => await this.queryData({q: this.state.searchQuery, limit: "10"})} className="btn btn-primary searchButton">Search</button>
                         </div>
                             {/* form with a checklist */}
                             <Category category="Tecnología" options={["Video", "Peardeck", "Google Form", "Quizlet"]}></Category>
@@ -65,8 +70,7 @@ export default class Home extends React.Component {
                     </Grid>
                     <Grid item xs={9}>
                         <div className="p-4 bg-light h-100">
-                            <Result data={this.data}/>
-                            {this.state.searchResults.map((data) => <Result data={data}/>)}
+                            {this.state.searchResults.map((data, index) => <Result key={index} data={data}/>)}
                         </div>
                     </Grid>
                 </Grid>
