@@ -2,27 +2,22 @@ import React from "react";
 import "./search.css";
 import Result from "../../components/result/result"
 import Grid from "@mui/material/Grid";
+import Pagination from "@mui/material/Pagination";
 import Category from "../../components/search/category";
 
 export default class Home extends React.Component {
     constructor(props) {
       // dummy data
       super(props);
-      this.data = {
-          "title": "Carlos va a la escuela",
-          "level": "Spanish Level 1- BÁSICO",
-          "author": "Myra Moghal",
-          "video": "https://drive.google.com/file/d/1n74-mfYe7Y5r7P7pKSTQcxDvy0_zt5tI/view?usp=sharing",
-          "type": "video",
-          "vocabulary": "Materiales de clase, Acciones habituales en un día de clase",
-          "skills": "Comprensión auditiva"
-      }
 
       this.state = {
         searchResults: [],
         searchQuery: "",
+        results_per_page: 5,
+        page: 0,
       }
 
+      this.changePage = this.changePage.bind(this);
       console.log("init");
     }
 
@@ -35,8 +30,8 @@ export default class Home extends React.Component {
       body: JSON.stringify(query),
     }).then(response => response.json())
       .then(resp => {
-        console.log(`Got ${resp.length} results for query ${query}`)
-        this.setState({searchResults: resp})
+        console.log(`Got ${resp.length} results for query ${query}`);
+        this.setState({searchResults: resp});
       })
       .catch(error => console.error(`Error searching with query ${query}`, error));
   }
@@ -47,8 +42,12 @@ export default class Home extends React.Component {
     }
 
     setSearchQuery = (e) => {
-        this.setState({ searchQuery: e.target.value });
+      this.setState({ searchQuery: e.target.value });
     }
+
+    changePage = (event, value) => {
+      this.setState({ page: value - 1 });
+    };
 
     render() {
         return (
@@ -70,7 +69,8 @@ export default class Home extends React.Component {
                     </Grid>
                     <Grid item xs={9}>
                         <div className="p-4 bg-light h-100">
-                            {this.state.searchResults.map((data, index) => <Result key={index} data={data}/>)}
+                            {this.state.searchResults.slice(this.state.results_per_page*this.state.page, this.state.results_per_page*this.state.page+this.state.results_per_page).map((data, index) => <Result key={index} data={data}/>)}
+                            <Pagination count={parseInt(this.state.searchResults.length/this.state.results_per_page)} color="standard" onChange={this.changePage}/>
                         </div>
                     </Grid>
                 </Grid>
