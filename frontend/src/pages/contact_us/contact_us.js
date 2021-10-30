@@ -26,8 +26,8 @@ export default class ContactUs extends React.Component {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="section-title">
-                                <h2 className="title">Contact Us</h2>
-                                <p>Let us know what you think! </p><hr/>
+                                <h2 className="title">Contacto</h2>
+                                <p className="title2">Let us know what you think! </p><hr/>
                                 <form id="contact-form" onSubmit={this.submitEmail}
                                     method="POST">
                                 <div className="form-group">
@@ -57,12 +57,12 @@ export default class ContactUs extends React.Component {
                                 </div>
                                 <div className="form-group">
                                     <textarea placeholder = "Message"  id="message" 
-                                       className="form-control" rows="1" 
+                                       className="form-control" rows="10" 
                                        required value={this.state.message}
                                       //onChange= {this.onMsgChange.bind(this)}
                                       onChange={this.onMsgChange}/>
                                 </div>
-                                <button className= "button" type="submit" id="button" >Submit</button>
+                                <button className= "button" type="submit" id="button" >SUBMIT</button>
                                 </form>
                             </div>
                         </div>

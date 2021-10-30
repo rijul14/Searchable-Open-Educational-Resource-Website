@@ -7,15 +7,17 @@ import CC from './cc.png';
 export default class Footer extends React.Component {
     render() {
         return (
-            <div class="container-fluid">
-                <div class = "row footer flex-nowrap">
-                    <div class="col onee">
-                        <img src={DornsifeLogo} alt="logo"height={90}/>
+            <div className="container-fluid">
+                <div className = "row footer flex-nowrap">
+                    <div className="col onee">
+                        <img src={DornsifeLogo} alt="logo"/>
                     </div>
-                    <div class = "col twwo">
-                        <img src={CC} alt="cc"height={60}/>
-                    </div>
-                    
+                    <div className = "col twwo">
+                        <img src={CC} alt="cc"/>
+                    </div>   
+                </div>
+                <div className="copyRight">
+                    Copyright @ 2021 www.oerinspanish.usc.edu. All rights reserved.
                 </div>
             </div>
 
