@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/home/home";
@@ -20,6 +21,10 @@ import {
 
 function App() {
     const history = useHistory();
+
+    useEffect(() => {
+        document.title = "Oerinspanish"
+      }, [])
 
     return (
         <div className="App">
