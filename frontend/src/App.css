@@ -3,11 +3,20 @@
   margin: 0%;
   padding: 0%;
   border: 0%;
-  bottom: 0px;
+  bottom: 0%;
+  right: 0px;
+}
+html,
+body {
+  overflow-x: hidden;
 }
 
 .navbar {
   background-color: rgb(255, 255, 255);
-  font-size: 15pt;
+  font-size: 1.7vw;
   border-bottom: 1px solid rgb(128, 128, 128);
+  width: auto;
+  right: 0px;
+  margin: 0px;
+  padding: 0px;
 }
