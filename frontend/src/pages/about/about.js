@@ -1,17 +1,19 @@
 import React from "react";
 import "./about.css"
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Link from '@mui/material/Link';
 
 export default class About extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            open: false
+            openOne: false,
+            openTwo: false,
+            openThree: false
         };
 
         this.handleLinkOne = this.handleLinkOne.bind(this);
@@ -20,13 +22,13 @@ export default class About extends React.Component {
     }
 
     handleLinkOne() {
-        this.setState({open: !this.state.open});
+        this.setState({openOne: !this.state.openOne});
     }
     handleLinkTwo() {
-        this.setState({open: !this.state.open});
+        this.setState({openTwo: !this.state.openTwo});
     }
     handleLinkThree() {
-        this.setState({open: !this.state.open});
+        this.setState({openThree: !this.state.openThree});
     }
 
     render() {
@@ -37,11 +39,14 @@ export default class About extends React.Component {
                 <p>
                     OERinspanish es una plataforma de recursos educacionales en español gratuitos, 
                     única en su género al ofrecer materiales creados tanto por estudiantes participantes 
-                    en el programa de servicio comunitario <a class="inTextLink" onClick={this.handleLinkOne} > Feliz en la Comunidad </a> como 
-                    por <a class="inTextLink" onClick={this.handleLinkTwo} >instructores de la Universidad de California del Sur (USC)</a>.
+                    en el programa de servicio comunitario <a className="inTextLink" onClick={this.handleLinkOne}> Feliz en la Comunidad </a> como 
+                    por <a className="inTextLink" onClick={this.handleLinkTwo} >instructores de la Universidad de California del Sur (USC)</a>.<br/><br/>
+                    
                     La esperanza detrás del proyecto es beneficiar a la comunidad más allá del entorno 
                     universitario y permitir el intercambio de conocimientos fuera de los límites 
-                    tradicionales del aula de clase. Los interesados podrán leer, descargar, copiar, 
+                    tradicionales del aula de clase.<br/><br/>
+                    
+                    Los interesados podrán leer, descargar, copiar, 
                     imprimir o enlazar los textos completos de estas unidades citando la fuente o autor/es.
                 </p>
             </div>
@@ -61,7 +66,7 @@ export default class About extends React.Component {
             </div>
 
             <Dialog
-                    open={this.state.open}
+                    open={this.state.openOne}
                     onClose={this.handleLinkOne}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
@@ -73,12 +78,12 @@ export default class About extends React.Component {
                         <DialogContentText id="alert-dialog-description">
                         Feliz en la Comunidad es un programa de alcance comunitario que, desde 2014, 
                         permite a los estudiantes de español de niveles intermedios y avanzados de la 
-                        Universidad de California del Sur colaborar con escuelas del área metropolitana de Los Ángeles. 
+                        Universidad de California del Sur colaborar con escuelas del área metropolitana de Los Ángeles.<br/><br/>
                         A través de este programa de aprendizaje y servicio, los estudiantes practican español 
                         y sus habilidades de liderazgo mientras establecen conexiones con vecindarios cultural y 
                         socialmente diversos de Los Ángeles. Durante su participación, los estudiantes de USC 
                         crean materiales que posteriormente son compartidos con <a class="inTextLink" onClick={this.handleLinkThree}>centros colaboradores</a>
-                        a través de nuestra plataforma o a través de visitas en persona a diversos centros colaboradores. 
+                        a través de nuestra plataforma o a través de visitas en persona a diversos centros colaboradores. <br/><br/>
  	                    Los interesados podrán leer, descargar, copiar, imprimir o enlazar los textos completos de estas 
                          unidades citando la fuente o autor/es.
                         </DialogContentText>
@@ -86,7 +91,7 @@ export default class About extends React.Component {
                 </Dialog>
 
                 <Dialog
-                    open={this.state.open}
+                    open={this.state.openThree}
                     onClose={this.handleLinkThree}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
@@ -96,26 +101,27 @@ export default class About extends React.Component {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                        CALCREATIVE:<br/>
-                        https://calcreative.org/about/us/<br/><br/>
+                        <Link href="https://calcreative.org/about/us/">CALCREATIVE</Link>
+                        {/* CALCREATIVE:<br/> */}
+                        {/* <br/><br/> */}
 
-                        USC HYBRID HIGH SCHOOL:<br/>
-                        https://www.ednovate.org/hybrid<br/><br/>
+                        <Link target="_blank" href="https://www.ednovate.org/hybrid">USC HYBRID HIGH SCHOOL</Link>
+                        <br/><br/>
 
-                        JOHN MUIR ELEMENTARY SCHOOL (GLENDALE)<br/>
-                        https://www.gusd.net/muir<br/><br/>
+                        <Link target="_blank" href="https://www.gusd.net/muir">JOHN MUIR ELEMENTARY SCHOOL (GLENDALE)</Link>
+                        <br/><br/>
 
-                        LARCHMONT CHARTER SCHOOL (LAFAYETTE PARK CAMPUS)<br/>
-                        https://www.larchmontcharter.org/lfp-campus<br/><br/>
+                        <Link target="_blank" href="https://www.larchmontcharter.org/lfp-campus">LARCHMONT CHARTER SCHOOL (LAFAYETTE PARK CAMPUS)</Link>
+                        <br/><br/>
 
-                        INTERNATIONAL SPANISH ACADEMY (LOS ÁNGELES)<br/>
-                        https://www.educacionyfp.gob.es/eeuu/en/convocatorias-programas/convocatorias-eeuu/isa.html<br/><br/>
+                        <Link target="_blank" href="https://www.educacionyfp.gob.es/eeuu/en/convocatorias-programas/convocatorias-eeuu/isa.html">INTERNATIONAL SPANISH ACADEMY (LOS ÁNGELES)</Link>
+                        <br/><br/>
                         </DialogContentText>
                     </DialogContent>
                 </Dialog>
 
                 <Dialog
-                    open={this.state.open}
+                    open={this.state.openTwo}
                     onClose={this.handleLinkTwo}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
