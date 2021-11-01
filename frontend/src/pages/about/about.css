@@ -4,6 +4,8 @@
   width: 60%;
   margin-left: auto;
   margin-right: auto;
+  height: 900px;
+  margin-bottom: 50px;
 }
 .body-about p {
   margin-top: 50px;
@@ -18,4 +20,8 @@
   width: 90%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.inTextLink {
+  color: rgb(157, 0, 0);
 }
