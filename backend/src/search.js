@@ -144,7 +144,7 @@ function apply_enrich(res){
 module.exports.processQueryFlex = async function (query, docClient, tableName) {
   if (typeof docIndex === 'undefined') docIndex = await getDocIndex(docClient, tableName);
   let q;
-  let params = {suggest: true};
+  let params = {};
   if ('q' in query) {
     q = query.q;
     delete query.q;
@@ -160,6 +160,10 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
   let skipTransform = false;
   let result;
   param_settings.forEach(s => processParams(s));
+
+  let limit = params.limit;
+  let offset = params.offset;
+
   if (isObjEmpty(query)) { // simple full text search
     params.enrich = true;
     if (q.length === 0) { // display all results
@@ -167,18 +171,16 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
         val.id = key;
         return val;
       });
-      if (params.offset) {
-        result = result.slice(0,params.offset);
-      }
-      if (params.limit) {
-        result = result.slice(0,params.limit);
-      }
       skipTransform = true;
     } else {
+      limit = offset = null; // no need to filter again
       result = await docIndex.search(q, params);
     }
   }
   else { // per field queries
+    // delete global settings
+    delete params.limit;
+    delete params.offset;
     let qResult;
     if (q) {
       // searchList.push.apply(searchList, searchHeaders.map(val => ({...params, field: val, query: q})));
@@ -227,6 +229,14 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
     }).flat(1); // flatten to 1d array
   }
 
-  console.log("Search params", params, `result (${result.length}):`, result);
+  // need final manual offset and limit
+  if (offset) {
+    result = result.slice(0, offset);
+  }
+  if (limit) {
+    result = result.slice(0, limit);
+  }
+
+  console.log("Search params", params, "Result", result, result.length);
   return result;
 }
