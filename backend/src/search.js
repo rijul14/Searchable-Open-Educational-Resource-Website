@@ -6,6 +6,8 @@ const searchTableName = "SearchTable";
 const searchDbId = "_id";
 
 let docIndex;
+let allTableData;
+
 const indexOptions = {
   preset: "default",
   charset: "latin:advanced",
@@ -69,10 +71,17 @@ module.exports.processQueryDynamo = async function (query, params, docClient) {
 
 const isObjEmpty = obj => Object.keys(obj).length === 0;
 
+async function getAllTableData(docClient, tableName) {
+  if (!allTableData) {
+    allTableData = (await docClient.scan({TableName: tableName}).promise()).Items;
+  }
+  return allTableData;
+}
+
 const indexDocs = async (docClient, tableName) => {
   let start = new Date().getTime();
   const docIndex = new Document(indexOptions);
-  const data = (await docClient.scan({TableName: tableName}).promise()).Items;
+  const data = await getAllTableData(docClient, tableName);
   data.forEach(item => docIndex.add(item));
   console.log("Indexing took", new Date().getTime() - start, 'ms');
 
@@ -142,6 +151,9 @@ function apply_enrich(res){
 }
 
 module.exports.processQueryFlex = async function (query, docClient, tableName) {
+  if (!query || isObjEmpty(query)){
+    return [];
+  }
   if (typeof docIndex === 'undefined') docIndex = await getDocIndex(docClient, tableName);
   let q;
   let params = {};
@@ -161,12 +173,20 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
   let result;
   param_settings.forEach(s => processParams(s));
 
+  if (Object.keys(query).length === 1){ // one field
+    const [k, v] = Object.entries(query)[0];
+    if (v === ''){ // get all possible values for the field/column
+      const data = await getAllTableData(docClient, tableName);
+      return [... new Set(data.map(obj => obj[k]))]
+    }
+  }
+
   let limit = params.limit;
   let offset = params.offset;
 
   if (isObjEmpty(query)) { // simple full text search
     // params.enrich = true;
-    if (q.length === 0) { // display all results
+    if (q === '') { // display all results
       result = Object.entries(docIndex.store).map(([key, val], _) => {
         val.id = key;
         return val;
@@ -202,9 +222,6 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
         }
       }
     }
-    if (result.length === 0) return [];
-  }
-  if (!skipTransform) {
     if (true) { // todo intersection option
       // intersect all results to get AND behavior, removed from flexsearch :(
       result = [{result: result.map(res => {
@@ -215,19 +232,27 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
         result = [];
       }
     }
-
-    result = result.map(res => {
-      if (res.result && res.result.length > 0 && !isNaN(res.result[0])){ // not enriched, bug https://github.com/nextapps-de/flexsearch/issues/264
-        return res.result.map(id => {
-          const doc = docIndex.get(id);
-          doc.id = id;
-          return doc;
-        });
-      } else return res.result.map(doc => {
-        doc.doc.id = doc.id;
-        return doc.doc;
-      });
-    }).flat(1); // flatten to 1d array
+    if (result.length === 0) return [];
+  }
+  if (!skipTransform) {
+    // result = result.map(res => {
+    //   if (res.result && res.result.length > 0 && !isNaN(res.result[0])){ // not enriched, bug https://github.com/nextapps-de/flexsearch/issues/264
+    //     return res.result.map(id => {
+    //       const doc = docIndex.get(id);
+    //       doc.id = id;
+    //       return doc;
+    //     });
+    //   } else return res.result.map(doc => {
+    //     doc.doc.id = doc.id;
+    //     return doc.doc;
+    //   });
+    // }).flat(1); // flatten to 1d array
+    result = result.map(res => res.result).flat(1); // flatten to 1d array
+    result = [...new Set(result)].map(id => { // get unique and enrich
+      const doc = docIndex.get(id);
+      doc.id = id;
+      return doc;
+    })
   }
 
   // need final manual offset and limit

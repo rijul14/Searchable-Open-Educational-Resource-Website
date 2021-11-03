@@ -17,18 +17,18 @@ export default class Result extends React.Component {
                         {this.props.data.level}
                     </Typography>
                     <Typography variant="body2">
-                        Author: {this.props.data.author}
+                        Vocabulary: {this.props.data.vocabulary}
                     </Typography>
                     <Typography variant="body2" className="pt-2">
-                        Vocabulary: {this.props.data.vocabulary}
+                        Grammar: {this.props.data.grammar}
                     </Typography>
                     <Typography variant="body2" className="pt-2">
                         Skills: {this.props.data.skills}
                     </Typography>
-                    <Typography variant="body2">
-                        Video link:{" "}
-                        <Button href={this.props.data.video}>Link</Button>
+                    <Typography variant="body2" className="pt-2">
+                        Author: {this.props.data.author}
                     </Typography>
+                    <Button href={this.props.data.location}>Link to {this.props.data.technology_used}</Button>
                 </CardContent>
             </Card>
         );
