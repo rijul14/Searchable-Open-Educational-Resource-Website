@@ -56,7 +56,7 @@ const search = async (event) => {
   try {
     console.log('Search received:', event);
     // const body = JSON.parse(event.body);
-    const body = {"q": "Yo digo que no", "level": "Spanish Level 1- BÁSICO", "limit": 10};
+    const body = {"q": "comida", "limit": 10};
     console.log('Options', options, 'Table name', tableName);
 
     const params = {

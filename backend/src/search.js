@@ -165,7 +165,7 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
   let offset = params.offset;
 
   if (isObjEmpty(query)) { // simple full text search
-    params.enrich = true;
+    // params.enrich = true;
     if (q.length === 0) { // display all results
       result = Object.entries(docIndex.store).map(([key, val], _) => {
         val.id = key;
@@ -203,18 +203,19 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
       }
     }
     if (result.length === 0) return [];
+  }
+  if (!skipTransform) {
     if (true) { // todo intersection option
       // intersect all results to get AND behavior, removed from flexsearch :(
       result = [{result: result.map(res => {
-        if (res.field in query) delete query[res.field];
-        return res.result;
-      }).reduce((a, b) => a.filter(c => b.includes(c)))}]; // from https://stackoverflow.com/a/51874332/8170714
+          if (res.field in query) delete query[res.field];
+          return res.result;
+        }).reduce((a, b) => a.filter(c => b.includes(c)))}]; // from https://stackoverflow.com/a/51874332/8170714
       if (!isObjEmpty(query)){ // have fields not matched at all
         result = [];
       }
     }
-  }
-  if (!skipTransform) {
+
     result = result.map(res => {
       if (res.result && res.result.length > 0 && !isNaN(res.result[0])){ // not enriched, bug https://github.com/nextapps-de/flexsearch/issues/264
         return res.result.map(id => {
