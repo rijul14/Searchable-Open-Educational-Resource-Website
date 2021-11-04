@@ -34,10 +34,7 @@ export default class Footer extends React.Component {
                         <img src={CC} alt="cc" onClick={this.handleCopyright}/>
                     </div>
                 </div>
-                <div className="copyRight">
-                    Copyright @ 2021 www.oerinspanish.usc.edu. All rights
-                    reserved.
-                </div>
+                
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleCopyright}

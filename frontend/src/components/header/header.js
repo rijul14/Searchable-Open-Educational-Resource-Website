@@ -4,8 +4,8 @@ import USClogo from './USClogo.png';
 export default class Header extends React.Component {
     render() {
         return (
-            <div class="container-fluid">
-                <div class = "row flex-nowrap">
+            <div class="container-fluid headerrr">
+                <div class = "row head flex-nowrap">
                     <div class="col oone">
                          <p>
                         Departamento de Culturas Latinoamericano e Ibéricas <br />

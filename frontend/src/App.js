@@ -49,7 +49,7 @@ function App() {
                             </Nav>
                             <Nav>
                                 <Nav.Link as={Link} to={"/home"}>
-                                    pågina principal
+                                    página principal
                                 </Nav.Link>
                                 <Nav.Link as={Link} to={"/search"}>
                                     buscar
@@ -58,7 +58,7 @@ function App() {
                                     ¿quiénes somos?
                                 </Nav.Link>
                                 <Nav.Link as={Link} to={"/contact_us"}>
-                                    cantacto
+                                    contacto
                                 </Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
