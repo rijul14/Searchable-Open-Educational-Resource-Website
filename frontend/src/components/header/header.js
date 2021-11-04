@@ -8,7 +8,7 @@ export default class Header extends React.Component {
                 <div class = "row head flex-nowrap">
                     <div class="col oone">
                          <p>
-                        Departamento de Culturas Latinoamericano e Ibéricas <br />
+                        Departamento de Culturas Latinoamericanas e Ibéricas <br />
                         Programa básico de lengua española<br />
                         oerin.spanish@usc.edu<br />
                         </p>

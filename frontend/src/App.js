@@ -49,7 +49,7 @@ function App() {
                             </Nav>
                             <Nav>
                                 <Nav.Link as={Link} to={"/home"}>
-                                    página principal
+                                    principal
                                 </Nav.Link>
                                 <Nav.Link as={Link} to={"/search"}>
                                     buscar
