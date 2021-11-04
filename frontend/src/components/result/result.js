@@ -28,7 +28,7 @@ export default class Result extends React.Component {
                     <Typography variant="body2" className="pt-2">
                         Author: {this.props.data.author}
                     </Typography>
-                    <Button href={this.props.data.location}>Link to {this.props.data.technology_used}</Button>
+                    <Button target="_blank" href={this.props.data.location}>Link to {this.props.data.technology_used}</Button>
                 </CardContent>
             </Card>
         );

@@ -66,7 +66,7 @@ for i, link in enumerate(df.location):
     if mtype is None:
         mtype = 'binary/octet-stream'
     # resp = bucket.upload_file(fname, fname, ExtraArgs={'ContentType': mtype, 'ACL': "public-read"})
-    s3_link = f"https://{bucket.name}.s3.amazonaws.com/{urllib.parse.quote_plus(fname)}"
+    s3_link = f"https://{bucket.name}.s3.amazonaws.com/{urllib.parse.quote(fname)}"
     print(s3_link)
     df.location.iloc[i] = s3_link
 
