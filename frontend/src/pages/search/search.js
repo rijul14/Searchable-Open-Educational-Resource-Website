@@ -49,8 +49,8 @@ export default class Home extends React.Component {
     this.setState({page: value - 1});
   };
 
-  async startSearch() {
-    return await this.queryData({q: this.state.searchQuery});
+  startSearch = (e) => {
+    this.queryData({q: this.state.searchQuery});
   }
 
   checkEnter = (e) => {
@@ -66,8 +66,7 @@ export default class Home extends React.Component {
           <Grid item xs={3}>
             <div className="p-4 h-100">
               <div className="searchBar">
-                <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."}
-                       onKeyDown={this.checkEnter}></input>
+                <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."} onKeyDown={this.checkEnter}/>
                 <button onClick={this.startSearch} className="btn btn-primary searchButton">Search</button>
               </div>
               {/* form with a checklist */}
