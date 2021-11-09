@@ -13,7 +13,7 @@ body {
 
 .navbar {
   background-color: rgb(255, 255, 255);
-  font-size: 1.7vw;
+  font-size: 1.3vw;
   border-bottom: 2px solid rgb(19, 19, 19);
   right: 0px;
   margin: 0px;
@@ -24,6 +24,5 @@ body {
 
 .navbar a {
   color: black !important;
-  font-weight: 500;
-  margin-left: 5px;
+  font-weight: 400;
 }

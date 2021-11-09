@@ -1,25 +1,31 @@
 .body {
   text-align: center;
+  color: black !important;
 }
 .body p {
   margin-top: 50px;
   font-size: 25pt;
+  color: black !important;
 }
 .body .info {
   margin-top: 50px;
   font-size: 15pt;
+  color: black !important;
 }
 .title {
   margin-top: 50px;
   text-align: center;
+  color: black !important;
 }
 .title2 {
   text-align: center;
+  color: black !important;
 }
 
 .form-group {
   padding-top: 20px;
   padding-bottom: 20px;
+  color: black !important;
 }
 
 .button {
