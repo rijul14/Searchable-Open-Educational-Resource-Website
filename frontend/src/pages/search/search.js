@@ -14,7 +14,7 @@ export default class Home extends React.Component {
       searchResults: [],
       searchQuery: "",
       level: "",
-      skills: "", 
+      skills: "",
       results_per_page: 5,
       page: 0,
     }
@@ -102,11 +102,11 @@ export default class Home extends React.Component {
                 <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."} onKeyDown={this.checkEnter}/>
                 <button onClick={this.startSearch} className="btn btn-primary searchButton">Search</button>
               </div>
-              <Category onChange={this.setSearchTechnologyUsed} category="Tecnología" options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]}></Category>
+              <Category onChange={this.setSearchTechnologyUsed} category="Tecnología" options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]}/>
               <Category onChange={this.setSearchLevel} category="Nivel"
-                        options={["Spanish Level 1- BÁSICO", "Spanish Level 2- INTERMEDIO", "Spanish Level 3- AVANZADO"]}></Category>
+  options={["Spanish Level 1- BÁSICO", "Spanish Level 2- INTERMEDIO", "Spanish Level 3- AVANZADO"]}/>
               <Category onChange={this.setSearchSkills} category="Destrezas"
-                        options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}></Category>
+  options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}/>
              </div>
           </Grid>
           <Grid item xs={9}>
