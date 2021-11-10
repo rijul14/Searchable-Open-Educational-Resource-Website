@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "aws s3 sync build/ s3://oerinspanish.usc.edu --delete --exclude files/",
+    "deploy": "aws s3 sync build/ s3://oerinspanish.usc.edu --delete --exclude files/*",
     "predeploy": "npm run build"
   },
   "eslintConfig": {
