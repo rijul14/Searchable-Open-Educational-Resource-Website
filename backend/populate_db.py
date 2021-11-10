@@ -1,3 +1,7 @@
+import mimetypes
+import os
+import urllib.parse
+
 import pandas as pd
 
 pd.options.mode.chained_assignment = None  # default='warn'
@@ -34,18 +38,43 @@ for new_i, init_i in enumerate(special_rows.index):
 df = df[df['location'].str.startswith('http', na=False)]
 df = pd.concat([df, special_rows])
 
-# duplicate for case-insensitive search
-for col in df.columns:
-    if col == 'location':
-        continue
-    search = "_search_" + col
-    df[search] = df[col].str.lower()
+# # duplicate for case-insensitive search
+# for col in df.columns:
+#     if col == 'location':
+#         continue
+#     search = "_search_" + col
+#     df[search] = df[col].str.lower()
 
+df.reset_index(drop=True, inplace=True)
 df.to_csv('out.csv', index=False)
 
 import boto3
+from pathlib import Path
 
-dynamodb = boto3.resource('dynamodb',region_name='us-west-2')
+# switch google drive locations to s3 locations
+import gdown
+s3 = boto3.resource('s3')
+bucket = s3.Bucket('oerinspanish.usc.edu')
+
+fpath = Path('gdrive_files')
+fpath.mkdir(exist_ok=True)
+prev_path = Path.cwd()
+os.chdir(fpath)
+for i, link in enumerate(df.location):
+    fname = gdown.download(link, quiet=True, fuzzy=True)
+    mtype = mimetypes.guess_type(fname)[0]
+    if mtype is None:
+        mtype = 'binary/octet-stream'
+    resp = bucket.upload_file(fname, f"files/{fname}", ExtraArgs={'ContentType': mtype, 'ACL': "public-read"})
+#     s3_link = f"https://{bucket.name}.s3.amazonaws.com/{urllib.parse.quote(fname)}"
+    s3_link = f"/files/{urllib.parse.quote(fname)}"
+    print(s3_link)
+    df.location.iloc[i] = s3_link
+
+os.chdir(prev_path)
+df.to_csv('out2.csv', index=False)
+
+dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 
 
 def recreate_table():
