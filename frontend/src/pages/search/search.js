@@ -13,6 +13,8 @@ export default class Home extends React.Component {
     this.state = {
       searchResults: [],
       searchQuery: "",
+      level: "",
+      skills: "", 
       results_per_page: 5,
       page: 0,
     }
@@ -45,12 +47,43 @@ export default class Home extends React.Component {
     this.setState({searchQuery: e.target.value});
   }
 
+  setSearchTechnologyUsed = (e) => {
+    if(e === "Formulario de Google") {
+      e = "Google Form"
+    }
+    this.setState({technology_used: e});
+  }
+
+  setSearchLevel = (e) => {
+    this.setState({level: e});
+  }
+
+  setSearchSkills = (e) => {
+    this.setState({skills: e});
+  }
+
   changePage = (event, value) => {
     this.setState({page: value - 1});
   };
 
   startSearch = (e) => {
-    this.queryData({q: this.state.searchQuery});
+    // TODO(Sakura): Support multiple of the same options
+    let query = {
+      q: this.state.searchQuery,
+      technology_used: this.state.technology_used,
+      level: this.state.level,
+      skills: this.state.skills,
+    }
+
+    if(this.state.technology_used === "") {
+      delete query.technology_used;
+    } if(this.state.level === "") {
+      delete query.level;
+    } if(this.state.skills === "") {
+      delete query.skills;
+    }
+
+    this.queryData(query);
   }
 
   checkEnter = (e) => {
@@ -69,17 +102,12 @@ export default class Home extends React.Component {
                 <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."} onKeyDown={this.checkEnter}/>
                 <button onClick={this.startSearch} className="btn btn-primary searchButton">Search</button>
               </div>
-              {/* form with a checklist */}
-              <Category category="Tecnología" options={["Video", "Peardeck", "Google Form", "Quizlet"]}></Category>
-              <Category category="Nivel"
+              <Category onChange={this.setSearchTechnologyUsed} category="Tecnología" options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]}></Category>
+              <Category onChange={this.setSearchLevel} category="Nivel"
                         options={["Spanish Level 1- BÁSICO", "Spanish Level 2- INTERMEDIO", "Spanish Level 3- AVANZADO"]}></Category>
-              <Category category="Destrezas"
-                        options={["Comprensión auditiva", "Comprensión de textos", "Comprensión de palabras", "Comprensión de frases", "Comprensión de oraciones"]}></Category>
-              <Category category="Gramática"
-                        options={["Verbos", "Adjetivos", "Sustantivos", "Adverbios", "Preposiciones"]}></Category>
-              <Category category="Vocabulario"
-                        options={["Materiales de clase", "Acciones habituales en un día de clase", "Acciones habituales en un día de clase", "Acciones habituales en un día de clase", "Acciones habituales en un día de clase"]}></Category>
-            </div>
+              <Category onChange={this.setSearchSkills} category="Destrezas"
+                        options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}></Category>
+             </div>
           </Grid>
           <Grid item xs={9}>
             <div className="p-4 bg-light h-100">
