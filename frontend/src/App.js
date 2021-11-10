@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/home/home";
@@ -10,14 +10,7 @@ import Footer from "./components/footer/footer";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    useHistory,
-    Link,
-    Redirect,
-} from "react-router-dom";
+import {BrowserRouter as Router, Link, Redirect, Route, Switch, useHistory,} from "react-router-dom";
 
 function App() {
     const history = useHistory();
@@ -64,7 +57,7 @@ function App() {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-                <div className="mh-100 h-100">
+                <div className="content">
                     <Switch>
                         <Route path={"/home"} component={Home}></Route>
                         <Route path={"/search"} component={Search}></Route>
@@ -79,9 +72,9 @@ function App() {
                     </Switch>
                 </div>
             </Router>
-            <Footer />    
+            <Footer />
         </div>
-        
+
     );
 }
 

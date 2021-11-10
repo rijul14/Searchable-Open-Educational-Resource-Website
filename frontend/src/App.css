@@ -1,14 +1,15 @@
 .App {
-  height: auto;
-  margin: 0%;
-  padding: 0%;
-  border: 0%;
-  bottom: 0%;
-  right: 0px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 html,
 body {
   overflow-x: hidden;
+}
+
+.content {
+  flex: 1;
 }
 
 .navbar {

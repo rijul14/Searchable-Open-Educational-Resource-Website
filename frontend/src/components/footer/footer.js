@@ -3,7 +3,6 @@ import "./footer.css";
 import DornsifeLogo from "./DornsifeLogo.png";
 import CC from "./cc.png";
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -26,7 +25,7 @@ export default class Footer extends React.Component {
     render() {
         return (
             <div className="container-fluid">
-                <div className="row footer flex-nowrap">
+                <div className="row footer">
                     <div className="col onee">
                         <img src={DornsifeLogo} alt="logo" />
                     </div>
@@ -34,7 +33,7 @@ export default class Footer extends React.Component {
                         <img src={CC} alt="cc" onClick={this.handleCopyright}/>
                     </div>
                 </div>
-                
+
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleCopyright}

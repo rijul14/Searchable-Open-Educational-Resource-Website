@@ -1,15 +1,16 @@
 import React from "react";
 import "./header.css"
 import USClogo from './USClogo.png';
+
 export default class Header extends React.Component {
     render() {
         return (
             <div class="container-fluid headerrr" >
-                <div class = "row head flex-nowrap">
+                <div class = "row head">
                     <div class="col oone">
                         <p class = "deptTitle">Departamento de Culturas Latinoamericanas e Ibéricas</p>
                          <p class="deptBody">
-                        
+
                         Programa básico de lengua española<br />
                         oerin.spanish@usc.edu<br />
                         </p>
@@ -20,6 +21,6 @@ export default class Header extends React.Component {
                 </div>
             </div>
 
-        
+
         );}
 }
