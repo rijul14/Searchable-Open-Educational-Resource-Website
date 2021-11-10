@@ -103,10 +103,8 @@ export default class Home extends React.Component {
                 <button onClick={this.startSearch} className="btn btn-primary searchButton">Search</button>
               </div>
               <Category onChange={this.setSearchTechnologyUsed} category="Tecnología" options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]}/>
-              <Category onChange={this.setSearchLevel} category="Nivel"
-  options={["Spanish Level 1- BÁSICO", "Spanish Level 2- INTERMEDIO", "Spanish Level 3- AVANZADO"]}/>
-              <Category onChange={this.setSearchSkills} category="Destrezas"
-  options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}/>
+              <Category onChange={this.setSearchLevel} category="Nivel" options={["Spanish Level 1- BÁSICO", "Spanish Level 2- INTERMEDIO", "Spanish Level 3- AVANZADO"]}/>
+              <Category onChange={this.setSearchSkills} category="Destrezas" options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}/>
              </div>
           </Grid>
           <Grid item xs={9}>
