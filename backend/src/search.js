@@ -96,7 +96,8 @@ const indexDocs = async (docClient, tableName) => {
   //   // localStorage.setItem(key, data);
   //   exportItem[key] = data;
   // });
-  // await docClient.put({TableName: searchTableName, Item: exportItem}).promise();
+  // await docCl
+  // ient.put({TableName: searchTableName, Item: exportItem}).promise();
   // console.log("Saving index took", new Date().getTime() - start, 'ms');
 
   return docIndex;
@@ -164,7 +165,7 @@ async function getDocs(ids, docClient, tableName) {
   return (await docClient.batchGet(getParams).promise()).Responses[tableName];
 }
 
-async function apply_enrich(res, docClient, tableName) {
+async function enrichResults(res, docClient, tableName) {
 
   let enrichedList = [];
 
@@ -197,6 +198,7 @@ async function apply_enrich(res, docClient, tableName) {
 }
 
 module.exports.processQueryFlex = async function (query, docClient, tableName) {
+  tableName = "MainTable"
   if (!query || isObjEmpty(query)){
     return [];
   }
@@ -236,13 +238,15 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
       skipTransform = true;
     } else {
       if (typeof docIndex === 'undefined') docIndex = await getDocIndex(docClient, tableName);
+      console.log("doc index size", Object.keys(docIndex.register).length);
       limit = offset = null; // no need to filter again
       result = await docIndex.search(q, params);
+      result = result.map(res => res.result).flat(1); // flatten to 1d array
     }
   }
-  else {
+  else { // per field queries
     if (typeof docIndex === 'undefined') docIndex = await getDocIndex(docClient, tableName);
-    // per field queries
+    console.log("doc index size", Object.keys(docIndex.register).length);
     // delete global settings
     delete params.limit;
     delete params.offset;
@@ -254,29 +258,50 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
         return []; // global query didn't match anything
       }
     }
-    const searchList = Object.entries(query).map(([key, val]) => ({...params, field: key, query: val}));
+    const searchList = Object.entries(query).flatMap(([key, val]) =>
+      typeof val === 'string' ? {...params, field: key, query: val} : val.map(term => ({...params, field: key, query: term}))
+    );
     console.log("Search list", searchList);
-    result = await docIndex.search(searchList);
-    if (qResult) {
-      for (const qres of qResult) {
-        const findRes = result.find(res => res.field === qres.field);
-        if (typeof findRes !== "undefined"){ // combine results
-          findRes.result.push.apply(findRes, qres.result);
-        }else{ // push in new result
-          result.push(qres);
-        }
+    try {
+      result = await docIndex.search(searchList);
+    } catch (e) {
+      if (e instanceof TypeError){
+        console.log("Invalid request params, returning empty");
+        return [];
       }
     }
-    if (result.length === 0) return [];
-    if (true) { // todo intersection option
-      // intersect all results to get AND behavior, removed from flexsearch :(
-      result = [{result: result.map(res => {
-          if (res.field in query) delete query[res.field];
-          return res.result;
-        }).reduce((a, b) => a.filter(c => b.includes(c)))}]; // from https://stackoverflow.com/a/51874332/8170714
+    console.log("Search results", result);
+    // merge multi term results into one list
+    const newResult = {};
+    for (const res of result){
+      if (res.field in newResult)
+        newResult[res.field] = Array.from(new Set(newResult[res.field].concat(res.result))); // concat and de-duplicate
+      else
+        newResult[res.field] = res.result;
+    }
+    result = newResult;
+
+    if (qResult) { // global query result
+      qResult = Array.from(new Set(qResult.flatMap(res => res.result)));
+      result.q = qResult;
+    }
+    if (isObjEmpty(result)) return [];
+    if (true) {
+      // intersect all results to get AND behavior
+      Object.keys(result).forEach(key => delete query[key]);
       if (!isObjEmpty(query)){ // have fields not matched at all
-        result = [];
+        return [];
       }
+      // intersect all fields from https://stackoverflow.com/a/51874332/8170714
+      result = Object.values(result).reduce((prevVal, currVal) => prevVal.filter(v => currVal.includes(v)));
+
+      // result = [{result: result.map(res => {
+      //     if (res.field in query) delete query[res.field];
+      //     return res.result;
+      //   }).reduce((a, b) => a.filter(c => b.includes(c)))}]; // from https://stackoverflow.com/a/51874332/8170714
+      // if (!isObjEmpty(query)){ // have fields not matched at all
+      //   result = [];
+      // }
     }
     if (result.length === 0) return [];
   }
@@ -293,8 +318,7 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
     //     return doc.doc;
     //   });
     // }).flat(1); // flatten to 1d array
-    result = result.map(res => res.result).flat(1); // flatten to 1d array
-    result = await apply_enrich([...new Set(result)], docClient, tableName);
+    result = await enrichResults(Array.from(new Set(result)), docClient, tableName);
   }
 
   // need final manual offset and limit
