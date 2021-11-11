@@ -8,7 +8,7 @@ export default function Category({ category, options, onChange }) {
             <div className="options">
                 {options.map((option, index) => (
                     <div>
-                        <input onChange={() => onChange(option)} className="input" key={index} type="checkbox"/>{option}
+                        <input onChange={e => onChange(option, e.currentTarget.checked)} className="input" key={index} type="checkbox"/>{option}
                     </div>
                 ))}
             </div>

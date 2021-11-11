@@ -13,8 +13,6 @@ export default class Home extends React.Component {
     this.state = {
       searchResults: [],
       searchQuery: "",
-      level: "",
-      skills: "",
       results_per_page: 5,
       page: 0,
     }
@@ -24,7 +22,7 @@ export default class Home extends React.Component {
   }
 
   queryData = async (query) => {
-    const search_endpoint = "https://d8i85sam75.execute-api.us-west-2.amazonaws.com/Prod/search";
+    const search_endpoint = "https://75vsbghrpd.execute-api.us-west-2.amazonaws.com/Prod/search";
     console.log("Searching with", query)
     await fetch(search_endpoint, {
       method: 'POST',
@@ -32,6 +30,7 @@ export default class Home extends React.Component {
       body: JSON.stringify(query),
     }).then(response => response.json())
       .then(resp => {
+        if (typeof resp.length === "undefined") throw EvalError("Invalid result from the server");
         console.log(`Got ${resp.length} results for query ${query}`);
         this.setState({searchResults: resp});
       })
@@ -47,19 +46,47 @@ export default class Home extends React.Component {
     this.setState({searchQuery: e.target.value});
   }
 
-  setSearchTechnologyUsed = (e) => {
+  setMultiFieldState = state => {
+    const newState = {};
+    const checked = state.checked;
+    delete state.checked;
+    const [field, val] = Object.entries(state)[0];
+    let oldVal = this.state[field];
+    if (checked) { // add
+      if (typeof oldVal !== "undefined") {
+        if (typeof oldVal === 'string') oldVal = [oldVal];
+        newState[field] = oldVal.concat(val);
+      } else {
+        newState[field] = val;
+      }
+    } else if (typeof oldVal !== "undefined") { // remove
+      if (!Array.isArray(oldVal)) newState[field] = undefined;
+      else {
+        const idx = oldVal.indexOf(val);
+        if (idx !== -1) oldVal.splice(idx, 1);
+        if (oldVal.length === 1) oldVal = oldVal[0];
+        newState[field] = oldVal;
+      }
+    } else { // shouldn't happen, but do it anyways :)
+      delete newState[field];
+    }
+    console.log("Set multi field state", newState, {...state, checked: checked});
+    this.setState(newState);
+  }
+
+  setSearchTechnologyUsed = (e, checked) => {
     if(e === "Formulario de Google") {
       e = "Google Form"
     }
-    this.setState({technology_used: e});
+    this.setMultiFieldState({technology_used: e, checked: checked});
   }
 
-  setSearchLevel = (e) => {
-    this.setState({level: e});
+  setSearchLevel = (e, checked) => {
+    this.setMultiFieldState({level: e, checked: checked});
   }
 
-  setSearchSkills = (e) => {
-    this.setState({skills: e});
+  setSearchSkills = (e, checked) => {
+    this.setMultiFieldState({skills: e, checked: checked});
   }
 
   changePage = (event, value) => {
@@ -67,7 +94,6 @@ export default class Home extends React.Component {
   };
 
   startSearch = (e) => {
-    // TODO(Sakura): Support multiple of the same options
     let query = {
       q: this.state.searchQuery,
       technology_used: this.state.technology_used,
