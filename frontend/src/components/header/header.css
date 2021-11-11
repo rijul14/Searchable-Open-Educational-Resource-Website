@@ -1,22 +1,13 @@
 @import url("https://use.typekit.net/kfg2wkt.css");
 .header {
-  padding: 40px;
-  height: 150px;
+  /*padding: 20px;*/
   width: 100%;
 }
 
-.col.twoo {
+.col.oone, .col.twoo {
   background-color: rgb(120, 26, 15);
-  padding: 0px;
-  padding-bottom: 50px;
-  padding-top: 50px;
 }
-.col.oone {
-  background-color: rgb(120, 26, 15);
-  padding: 0px;
-  padding-bottom: 50px;
-  padding-top: 50px;
-}
+
 .deptTitle {
   margin-top: 5%;
   margin-left: 60px;
