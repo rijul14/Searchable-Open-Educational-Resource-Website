@@ -7,6 +7,8 @@ const searchDbId = "_id";
 
 let docIndex;
 let allTableData;
+let allDataFilled = false;
+let tableData;
 
 const indexOptions = {
   preset: "default",
@@ -14,7 +16,7 @@ const indexOptions = {
   language: "es",
   tokenize: "full",
   index: searchHeaders,
-  store: [...searchHeaders, "location"]
+  // store: [...searchHeaders, "location"]
 }
 
 // const LocalStorage = require('node-localstorage').LocalStorage,
@@ -85,7 +87,8 @@ const indexDocs = async (docClient, tableName) => {
   data.forEach(item => docIndex.add(item));
   console.log("Indexing took", new Date().getTime() - start, 'ms');
 
-  // todo temporary, skip store/load of index until documents are stored as well
+  // todo skipped exporting until bug is fixed
+  // // save index to db
   // start = new Date().getTime();
   // const exportItem = {[searchDbId]: "flexsearch"};
   // await docIndex.export((key, data) => {
@@ -94,13 +97,13 @@ const indexDocs = async (docClient, tableName) => {
   //   exportItem[key] = data;
   // });
   // await docClient.put({TableName: searchTableName, Item: exportItem}).promise();
-  // console.log("Exporting took", new Date().getTime() - start, 'ms');
+  // console.log("Saving index took", new Date().getTime() - start, 'ms');
 
   return docIndex;
 }
 
 const loadIndex = async (docClient) => {
-  return null; // todo temporary, skip store/load of index until documents are stored as well
+  return null; // todo skip loading until bug is fixed
   let start = new Date().getTime();
   const docIndex = new Document(indexOptions);
   try{
@@ -136,25 +139,67 @@ const getDocIndex = async (docClient, tableName) => {
   return docIndex;
 }
 
-function apply_enrich(res){
+const getLocalDoc = (id) => {
+  if (!allDataFilled && allTableData) {
+    tableData = {};
+    for (const item of allTableData){
+      tableData[item.id] = item;
+    }
+    allDataFilled = true;
+  }
+  if (!tableData) {
+    tableData = {};
+  }
+  return tableData[id]; // return undefined if not in local cache
+}
 
-  const arr = new Array(res.length);
+async function getDocs(ids, docClient, tableName) {
+  const getParams = {
+    RequestItems: {
+      [tableName]: {
+        Keys: ids.map(id => ({id: id}))
+      }
+    }
+  }
+  return (await docClient.batchGet(getParams).promise()).Responses[tableName];
+}
 
-  for(let x = 0, id; x < res.length; x++){
+async function apply_enrich(res, docClient, tableName) {
+
+  let enrichedList = [];
+
+  const fromDbList = [];
+
+  for (let x = 0, id; x < res.length; x++) {
 
     id = res[x];
 
-    arr[x] = docIndex.get(id);
+    const localDoc = getLocalDoc(id);
+    if (!localDoc) {
+      fromDbList.push(id);
+    }else {
+      enrichedList.push(localDoc);
+    }
   }
 
-  return arr;
+  if (fromDbList.length > 0) {
+    const list = await getDocs(fromDbList, docClient, tableName);
+    if (!tableData){
+      tableData = {};
+    }
+    for (const doc of list){ // add to local cache
+      tableData[doc.id] = doc;
+    }
+    enrichedList = enrichedList.concat(list);
+  }
+
+  return enrichedList;
 }
 
 module.exports.processQueryFlex = async function (query, docClient, tableName) {
   if (!query || isObjEmpty(query)){
     return [];
   }
-  if (typeof docIndex === 'undefined') docIndex = await getDocIndex(docClient, tableName);
   let q;
   let params = {};
   if ('q' in query) {
@@ -187,22 +232,22 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
   if (isObjEmpty(query)) { // simple full text search
     // params.enrich = true;
     if (q === '') { // display all results
-      result = Object.entries(docIndex.store).map(([key, val], _) => {
-        val.id = key;
-        return val;
-      });
+      result = await getAllTableData(docClient, tableName);
       skipTransform = true;
     } else {
+      if (typeof docIndex === 'undefined') docIndex = await getDocIndex(docClient, tableName);
       limit = offset = null; // no need to filter again
       result = await docIndex.search(q, params);
     }
   }
-  else { // per field queries
+  else {
+    if (typeof docIndex === 'undefined') docIndex = await getDocIndex(docClient, tableName);
+    // per field queries
     // delete global settings
     delete params.limit;
     delete params.offset;
     let qResult;
-    if (q) {
+    if (q && q.length > 0) {
       // searchList.push.apply(searchList, searchHeaders.map(val => ({...params, field: val, query: q})));
       qResult = await docIndex.search(q, params);
       if (qResult.length === 0){
@@ -222,6 +267,7 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
         }
       }
     }
+    if (result.length === 0) return [];
     if (true) { // todo intersection option
       // intersect all results to get AND behavior, removed from flexsearch :(
       result = [{result: result.map(res => {
@@ -248,11 +294,7 @@ module.exports.processQueryFlex = async function (query, docClient, tableName) {
     //   });
     // }).flat(1); // flatten to 1d array
     result = result.map(res => res.result).flat(1); // flatten to 1d array
-    result = [...new Set(result)].map(id => { // get unique and enrich
-      const doc = docIndex.get(id);
-      doc.id = id;
-      return doc;
-    })
+    result = await apply_enrich([...new Set(result)], docClient, tableName);
   }
 
   // need final manual offset and limit

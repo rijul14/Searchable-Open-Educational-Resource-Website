@@ -3,7 +3,7 @@
 // const AWS = AWSXRay.captureAWS(require("aws-sdk"));
 // const { metricScope, Unit } = require("aws-embedded-metrics");
 // const DDB = new AWS.DynamoDB({ apiVersion: "2012-10-08" });
-const {processQueryDynamo, processQueryFlex} = require("./search");
+let processQueryDynamo, processQueryFlex;
 
 const AWS = require("aws-sdk");
 
@@ -36,6 +36,10 @@ const jsonResponse = (statusCode, body, additionalHeaders) => ({
 });
 
 exports.search = async (event, context) => {
+  if (!processQueryFlex){
+    console.log("Importing search stuff");
+    ({processQueryDynamo, processQueryFlex} = require("./search"));
+  }
   try {
     console.log('Search received:', event);
     const body = JSON.parse(event.body);

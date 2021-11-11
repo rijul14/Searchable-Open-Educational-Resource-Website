@@ -74,6 +74,8 @@ for i, link in enumerate(df.location):
 os.chdir(prev_path)
 df.to_csv('out2.csv', index=False)
 
+# raise Exception("Stop")
+
 dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 
 

@@ -1,11 +1,11 @@
 .categoryName {
-    font-weight: 500;
-    font: 1.5vw;
+    font-weight: 800;
+    font: 3vw;
 }
 
 .options {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
 }
 
 .input {
