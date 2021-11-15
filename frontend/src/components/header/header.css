@@ -4,7 +4,8 @@
   width: 100%;
 }
 
-.col.oone, .col.twoo {
+.col.oone,
+.col.twoo {
   background-color: rgb(120, 26, 15);
 }
 
