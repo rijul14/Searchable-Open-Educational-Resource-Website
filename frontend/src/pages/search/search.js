@@ -121,9 +121,9 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className="h-100">
-        <Grid className="h-100" container spacing={2}>
-          <Grid item xs={3}>
-            <div className="p-4 h-100">
+        <Grid className="h-100" container spacing={1}>
+          <Grid item xs={3} style={{minWidth: "320px"}}>
+            <div className="p-2 h-100">
               <div className="searchBar">
                 <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."} onKeyDown={this.checkEnter}/>
                 <button onClick={this.startSearch} className="btn btn-primary searchButton">Search</button>
@@ -134,7 +134,8 @@ export default class Home extends React.Component {
              </div>
           </Grid>
           <Grid item xs={9}>
-            <div className="p-4 bg-light h-100">
+            {/* bg-light */}
+            <div className="p-2 h-100"> 
               {this.state.searchResults.slice(this.state.results_per_page * this.state.page, this.state.results_per_page * this.state.page + this.state.results_per_page).map((data, index) =>
                 <Result key={index} data={data}/>)}
               <Pagination count={parseInt(this.state.searchResults.length / this.state.results_per_page)}
