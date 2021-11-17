@@ -14,17 +14,18 @@ const port= 4000;
     next();
   });
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.mailtrap.io', 
-    port: 2525,
+  const transporter = nodemailer.createTransport({
+    service: "gmail", 
+    //port: 2525,
     auth: {
-      user: 'f76615441a7641',
-      pass: '2448b6e186d6c9'
+      type: "OAuth2",
+      user: "",
+      pass: "",
+      clientId: "425797620908-jmrm1mupq4uodpt2njv1ogi5jbre49r2.apps.googleusercontent.com",
+      clientSecret: "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",
+      refreshToken: "1//042apRf_6DnBFCgYIARAAGAQSNwF-L9IrHqYS66_5kxZfGDvB8rC1koeZpkw0e2vuBTc8wHHeb-XkOpjC8J1WihP0kocKaY_oMcY",
     }
   });
-
- 
-
 
   transporter.verify(function(error, success) {
     if (error) {
@@ -34,15 +35,15 @@ const transporter = nodemailer.createTransport({
     }
   });
 
-app.post('/contact_us', (req, res, next) => {
+  app.post('/contact_us', (req, res, next) => {
     var name = req.body.name
     var email = req.body.email
     var subject = req.body.subject
     var message = req.body.message
   
     var mail = {
-      from: name,
-      to: 'jackzhan@usc.edu',//my regular email I used to sign up to mailtrap
+      from: email,
+      to: "mercanselin@gmail.com",//my regular email I used to sign up to mailtrap
       subject: subject,
       text: message
     }
