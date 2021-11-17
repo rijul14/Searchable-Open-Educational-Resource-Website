@@ -98,6 +98,7 @@ export default class Home extends React.Component {
   };
 
   startSearch = () => {
+    this.props.history.push(`/search?q=${this.state.searchQuery}`);
     let query = {
       q: this.state.searchQuery,
       technology_used: this.state.technology_used,
@@ -126,7 +127,7 @@ export default class Home extends React.Component {
     return (
       <div className="h-100">
         <Grid className="h-100" container spacing={1}>
-          <Grid item xs={3} style={{minWidth: "320px"}}>
+          <Grid item xs={3} style={{minWidth: "300px"}}>
             <div className="p-2 h-100">
               <div className="searchBar">
                 <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."} onKeyDown={this.checkEnter}/>
