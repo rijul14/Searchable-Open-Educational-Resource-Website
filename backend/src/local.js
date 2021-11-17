@@ -54,9 +54,10 @@ const updateParams = async (item, idAttributeName) => {
 
 const search = async (event) => {
   try {
-    console.log('Search received:', event);
+    // console.log('Search received:', event);
     // const body = JSON.parse(event.body);
-    const body = {"q": "", "level": "Spanish Level 2"};
+    // const body = {'level': ['basico', 'intermedio'], 'technology_used': 'video'};
+    const body = {'technology_used': 'video'};
     console.log('Options', options, 'Table name', tableName);
 
     const params = {

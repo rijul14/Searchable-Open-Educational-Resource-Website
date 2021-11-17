@@ -17,16 +17,16 @@ export default class Result extends React.Component {
                         {this.props.data.level}
                     </Typography>
                     <Typography variant="body2">
-                        Vocabulary: {this.props.data.vocabulary}
+                        <strong>Vocabulario:</strong> {this.props.data.vocabulary}
                     </Typography>
                     <Typography variant="body2" className="pt-2">
-                        Grammar: {this.props.data.grammar}
+                        <strong>Gramática</strong>: {this.props.data.grammar}
                     </Typography>
                     <Typography variant="body2" className="pt-2">
-                        Skills: {this.props.data.skills}
+                        <strong>Habilidades:</strong> {this.props.data.skills}
                     </Typography>
                     <Typography variant="body2" className="pt-2">
-                        Author: {this.props.data.author}
+                        <strong>Autor:</strong> {this.props.data.author}
                     </Typography>
                     <Button href={this.props.data.location} target="_blank" >Link to {this.props.data.technology_used}</Button>
                 </CardContent>
