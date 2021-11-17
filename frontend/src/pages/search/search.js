@@ -11,7 +11,7 @@ export default class Home extends React.Component {
     // dummy data
     super(props);
 
-    const qParam = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).q;
+    const qParam = qs.parse(this.props.location.search, {ignoreQueryPrefix: true}).q;
     this.state = {
       searchResults: [],
       searchQuery: qParam,
@@ -79,7 +79,7 @@ export default class Home extends React.Component {
   }
 
   setSearchTechnologyUsed = (e, checked) => {
-    if(e === "Formulario de Google") {
+    if (e === "Formulario de Google") {
       e = "Google Form"
     }
     this.setMultiFieldState({technology_used: e, checked: checked});
@@ -98,6 +98,7 @@ export default class Home extends React.Component {
   };
 
   startSearch = () => {
+    this.props.history.push(`/search?q=${this.state.searchQuery}`);
     let query = {
       q: this.state.searchQuery,
       technology_used: this.state.technology_used,
@@ -105,11 +106,13 @@ export default class Home extends React.Component {
       skills: this.state.skills,
     }
 
-    if(this.state.technology_used === "") {
+    if (this.state.technology_used === "") {
       delete query.technology_used;
-    } if(this.state.level === "") {
+    }
+    if (this.state.level === "") {
       delete query.level;
-    } if(this.state.skills === "") {
+    }
+    if (this.state.skills === "") {
       delete query.skills;
     }
 
@@ -117,7 +120,7 @@ export default class Home extends React.Component {
   }
 
   checkEnter = (e) => {
-    if (e.keyCode === 13){
+    if (e.keyCode === 13) {
       this.startSearch();
     }
   }
@@ -126,22 +129,27 @@ export default class Home extends React.Component {
     return (
       <div className="h-100">
         <Grid className="h-100" container spacing={1}>
-          <Grid item xs={3} style={{minWidth: "320px"}}>
+          <Grid item xs={3} style={{minWidth: "300px"}}>
             <div className="p-2 h-100">
               <div className="searchBar">
-                <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."} onKeyDown={this.checkEnter}/>
+                <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."}
+                       onKeyDown={this.checkEnter}/>
                 <button onClick={this.startSearch} className="btn btn-primary searchButton">Search</button>
               </div>
-              <Category onChange={this.setSearchTechnologyUsed} category="Tecnología" options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]}/>
-              <Category onChange={this.setSearchLevel} category="Nivel" options={["Spanish Level 1- BÁSICO", "Spanish Level 2- INTERMEDIO", "Spanish Level 3- AVANZADO"]}/>
-              <Category onChange={this.setSearchSkills} category="Destrezas" options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}/>
-             </div>
+              <Category onChange={this.setSearchTechnologyUsed} category="Tecnología"
+                        options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]}/>
+              <Category onChange={this.setSearchLevel} category="Nivel"
+                        options={["Spanish Level 1- BÁSICO", "Spanish Level 2- INTERMEDIO", "Spanish Level 3- AVANZADO"]}/>
+              <Category onChange={this.setSearchSkills} category="Destrezas"
+                        options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}/>
+            </div>
           </Grid>
           <Grid item xs={9}>
             {/* bg-light */}
             <div className="p-2 h-100">
-              {this.state.searchResults.slice(this.state.results_per_page * this.state.page, this.state.results_per_page * this.state.page + this.state.results_per_page).map((data, index) =>
-                <Result key={index} data={data}/>)}
+              {this.state.searchResults.length > 0 ? (this.state.searchResults.slice(this.state.results_per_page * this.state.page, this.state.results_per_page * this.state.page + this.state.results_per_page).map((data, index) =>
+                  <Result key={index} data={data}/>)) : (<div>No se han encontrado resultados</div>) // empty result
+              }
               <Pagination count={parseInt(this.state.searchResults.length / this.state.results_per_page)}
                           color="standard" onChange={this.changePage}/>
             </div>

@@ -8,7 +8,12 @@
 
 .bg-image {
   background-image: url("mainPhoto.jpg");
-  height: 800px;
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*flex-basis: 100%;*/
+  /*min-height: 75vh;*/
+  /*max-height: 100vh;*/
+  height: 80vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -19,11 +24,14 @@
 .bg-bg {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(8px);
-  height: 800px;
+  height: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 70px;
+  /*padding-top: 70px;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bg-text {
@@ -39,15 +47,16 @@
   border: 3px solid #f1f1f1;
   /*position: absolute;*/
   z-index: 1;
-  margin-top: 1%;
-  margin-left: 10%;
+  /*margin-top: 1%;*/
+  /*margin-left: 10%;*/
   width: 80%;
-  padding: 80px;
+  /*height: 100%;*/
+  padding: 20px 40px 40px;
   text-align: center;
   font-size: 1.5vw;
   border-radius: 999px;
 }
-.bg-text .title {
+.bg-text .title-home {
   font-size: 6vw;
   color: rgb(162, 24, 9) !important;
 }
