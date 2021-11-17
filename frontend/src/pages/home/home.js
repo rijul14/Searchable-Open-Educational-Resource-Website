@@ -34,7 +34,7 @@ export default class Home extends React.Component {
                     <div className="bg-image">
                         <div className="bg-bg">
                             <div className="bg-text">
-                                <div className="title">
+                                <div className="title-home">
                                     Oerinspanish <br/>
                                 </div>
                                 Recursos educativos de acceso libre <br/>
