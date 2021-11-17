@@ -4,21 +4,24 @@ import Result from "../../components/result/result"
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import Category from "../../components/search/category";
+import qs from "qs";
 
 export default class Home extends React.Component {
   constructor(props) {
     // dummy data
     super(props);
 
+    const qParam = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).q;
     this.state = {
       searchResults: [],
-      searchQuery: "",
+      searchQuery: qParam,
       results_per_page: 5,
       page: 0,
     }
 
     this.changePage = this.changePage.bind(this);
-    console.log("init");
+
+    console.log("init", `qparam: ${qParam}`);
   }
 
   queryData = async (query) => {
@@ -39,7 +42,8 @@ export default class Home extends React.Component {
 
   async componentDidMount() {
     console.log("Running")
-    await this.queryData({q: ""});
+    // await this.queryData({q: ""});
+    this.startSearch();
   }
 
   setSearchQuery = (e) => {
@@ -93,7 +97,7 @@ export default class Home extends React.Component {
     this.setState({page: value - 1});
   };
 
-  startSearch = (e) => {
+  startSearch = () => {
     let query = {
       q: this.state.searchQuery,
       technology_used: this.state.technology_used,
@@ -135,7 +139,7 @@ export default class Home extends React.Component {
           </Grid>
           <Grid item xs={9}>
             {/* bg-light */}
-            <div className="p-2 h-100"> 
+            <div className="p-2 h-100">
               {this.state.searchResults.slice(this.state.results_per_page * this.state.page, this.state.results_per_page * this.state.page + this.state.results_per_page).map((data, index) =>
                 <Result key={index} data={data}/>)}
               <Pagination count={parseInt(this.state.searchResults.length / this.state.results_per_page)}
