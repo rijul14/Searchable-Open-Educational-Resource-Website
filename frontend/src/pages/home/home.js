@@ -42,8 +42,8 @@ export default class Home extends React.Component {
                                 Recursos educativos de acceso libre <br/>
                                 para la enseñanza del español <br/> <br/> <br/>
                                 <div className="search">
-                                    <input onChange={this.updateSearchQuery} onKeyDown={this.checkEnter}/>
-                                    <button onClick={this.startSearch}>búsqueda</button>
+                                    <input className="input" placeholder= "búsqueda" onChange={this.updateSearchQuery} onKeyDown={this.checkEnter}/>
+                                    <button className="button" onClick={this.startSearch}></button>
                                     {/*<Link style={{color: 'inherit'}}*/}
                                     {/*      to="/search">búsqueda</Link><br/>*/}
                                 </div>
