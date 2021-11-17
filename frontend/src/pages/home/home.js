@@ -11,8 +11,10 @@ export default class Home extends React.Component {
     }
 
     startSearch = () => {
-        console.log("search clicked", this.state.searchQuery);
-        this.props.history.push(`/search?q=${this.state.searchQuery}`);
+        const searchQuery = this.state.searchQuery;
+        console.log("search clicked", searchQuery);
+        if(searchQuery && searchQuery.trim().length > 0) this.props.history.push(`/search?q=${searchQuery}`);
+        else this.props.history.push(`/search`);
     }
 
     updateSearchQuery = e => {

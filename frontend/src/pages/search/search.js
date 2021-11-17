@@ -11,18 +11,23 @@ export default class Home extends React.Component {
     // dummy data
     super(props);
 
-    const qParam = qs.parse(this.props.location.search, {ignoreQueryPrefix: true}).q;
     this.state = {
       searchResults: [],
-      searchQuery: qParam,
       results_per_page: 5,
       page: 0,
+      lastQuery: '',
+      q: '',
+      technology_used: '',
+      level: '',
+      skills: '',
     }
 
     this.changePage = this.changePage.bind(this);
 
-    console.log("init", `qparam: ${qParam}`);
+    console.log("init", this.state);
   }
+
+  isObjEmpty = obj => Object.keys(obj).length === 0;
 
   queryData = async (query) => {
     const search_endpoint = "https://75vsbghrpd.execute-api.us-west-2.amazonaws.com/Prod/search";
@@ -34,7 +39,7 @@ export default class Home extends React.Component {
     }).then(response => response.json())
       .then(resp => {
         if (typeof resp.length === "undefined") throw EvalError("Invalid result from the server");
-        console.log(`Got ${resp.length} results for query ${query}`);
+        console.log(`Got ${resp.length} results`);
         this.setState({searchResults: resp});
       })
       .catch(error => console.error(`Error searching with query ${query}`, error));
@@ -43,11 +48,32 @@ export default class Home extends React.Component {
   async componentDidMount() {
     console.log("Running")
     // await this.queryData({q: ""});
-    this.startSearch();
+    this.setQueryAndSearch(this.props.location.search);
+
+    this.unlisten = this.props.history.listen((location, action) => {
+      if (!location) return;
+      this.setQueryAndSearch(location.search);
+      console.log("History change", action, location);
+    });
+  }
+
+  setQueryAndSearch = searchStr => {
+    const query = qs.parse(searchStr, {ignoreQueryPrefix: true});
+    if (this.isObjEmpty(query)) query.q = '';
+    this.queryData(query);
+    for (const val of ['q', 'technology_used', 'level', 'skills']) {
+      if (!(val in query)) query[val] = '';
+    }
+    query.lastQuery = searchStr;
+    this.setState(query);
+  };
+
+  componentWillUnmount() {
+    if (this.unlisten) this.unlisten();
   }
 
   setSearchQuery = (e) => {
-    this.setState({searchQuery: e.target.value});
+    this.setState({q: e.target.value});
   }
 
   setMultiFieldState = state => {
@@ -57,14 +83,14 @@ export default class Home extends React.Component {
     const [field, val] = Object.entries(state)[0];
     let oldVal = this.state[field];
     if (checked) { // add
-      if (typeof oldVal !== "undefined") {
+      if (oldVal) {
         if (typeof oldVal === 'string') oldVal = [oldVal];
         newState[field] = oldVal.concat(val);
       } else {
         newState[field] = val;
       }
-    } else if (typeof oldVal !== "undefined") { // remove
-      if (!Array.isArray(oldVal)) newState[field] = undefined;
+    } else if (oldVal) { // remove
+      if (!Array.isArray(oldVal)) newState[field] = ''; // single str, remove
       else {
         const idx = oldVal.indexOf(val);
         if (idx !== -1) oldVal.splice(idx, 1);
@@ -72,7 +98,7 @@ export default class Home extends React.Component {
         newState[field] = oldVal;
       }
     } else { // shouldn't happen, but do it anyways :)
-      delete newState[field];
+      newState[field] = '';
     }
     console.log("Set multi field state", newState, {...state, checked: checked});
     this.setState(newState);
@@ -97,26 +123,35 @@ export default class Home extends React.Component {
     this.setState({page: value - 1});
   };
 
-  startSearch = () => {
-    this.props.history.push(`/search?q=${this.state.searchQuery}`);
+  startSearch = (firstTime = false) => {
+    firstTime = firstTime === true; // check dedicated boolean
     let query = {
-      q: this.state.searchQuery,
+      q: this.state.q,
       technology_used: this.state.technology_used,
       level: this.state.level,
       skills: this.state.skills,
     }
 
-    if (this.state.technology_used === "") {
-      delete query.technology_used;
+    for (const [k, v] of Object.entries(query))
+      if (!v || v.length === 0) delete query[k];
+
+    let newPath;
+    const queryStr = qs.stringify(query);
+    if (!firstTime && queryStr === this.state.lastQuery) return; // skip if identical
+    this.setState({lastQuery: queryStr});
+    newPath = queryStr && queryStr.trim().length > 0 ? `/search?${queryStr}` : "/search";
+    if(this.isObjEmpty(query)) query.q = '';
+    if (firstTime) {
+      console.log("First time searching", query);
+      this.queryData(query);
     }
-    if (this.state.level === "") {
-      delete query.level;
-    }
-    if (this.state.skills === "") {
-      delete query.skills;
+    else if (this.props.history.location.pathname + this.props.history.location.search !== newPath) {
+      this.props.history.push(newPath);
+      console.log("Navigating to path:", newPath, firstTime)
     }
 
-    this.queryData(query);
+    // should trigger history listener instead
+    // this.queryData(query);
   }
 
   checkEnter = (e) => {
@@ -132,15 +167,15 @@ export default class Home extends React.Component {
           <Grid item xs={3} style={{minWidth: "300px"}}>
             <div className="p-2 h-100">
               <div className="searchBar">
-                <input value={this.state.searchQuery} onChange={this.setSearchQuery} placeholder={"Search keywords..."}
+                <input value={this.state.q} onChange={this.setSearchQuery} placeholder={"Search keywords..."}
                        onKeyDown={this.checkEnter}/>
                 <button onClick={this.startSearch} className="btn btn-primary searchButton">Search</button>
               </div>
-              <Category onChange={this.setSearchTechnologyUsed} category="Tecnología"
-                        options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]}/>
-              <Category onChange={this.setSearchLevel} category="Nivel"
-                        options={["Spanish Level 1- BÁSICO", "Spanish Level 2- INTERMEDIO", "Spanish Level 3- AVANZADO"]}/>
-              <Category onChange={this.setSearchSkills} category="Destrezas"
+              <Category onChange={this.setSearchTechnologyUsed} category="Tecnología" checkedStates={this.state.technology_used}
+                        options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]} />
+              <Category onChange={this.setSearchLevel} category="Nivel" checkedStates={this.state.level}
+                        options={["BÁSICO", "INTERMEDIO", "AVANZADO"]}/>
+              <Category onChange={this.setSearchSkills} category="Destrezas" checkedStates={this.state.skills}
                         options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}/>
             </div>
           </Grid>
