@@ -19,11 +19,12 @@ const port= 4000;
     //port: 2525,
     auth: {
       type: "OAuth2",
-      user: "",
-      pass: "",
-      clientId: "425797620908-jmrm1mupq4uodpt2njv1ogi5jbre49r2.apps.googleusercontent.com",
-      clientSecret: "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",
-      refreshToken: "1//042apRf_6DnBFCgYIARAAGAQSNwF-L9IrHqYS66_5kxZfGDvB8rC1koeZpkw0e2vuBTc8wHHeb-XkOpjC8J1WihP0kocKaY_oMcY",
+      user: "oerinspanish@gmail.com",
+      pass: "usc12345",
+      clientId: "1028717496461-hes8rncc89tr35ohfirgehqe6kgre87e.apps.googleusercontent.com",
+      clientSecret: "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",
+      accessToken: "ya29.a0ARrdaM8Pc0k-Un62s1qiMuUoEXJ3f56VTLVXW18bXthnHv1sMifQA3-LXRGOZQ8KY6cwsuYtvFh3hE50du5tD79lObizhFysX8gFy3cytD2r_SXprtS9g7urtLU6HsYVIfXdYeNQdu-eoapX6gF_eS6DRcT2",
+      refreshToken: "4/0AX4XfWjtGOHZ6BBWEvU8c0PzkQV4SY81QV2TGqJJiPSq-fdk5Qw8A_25YdV8fNjqIkQmlQ",
     }
   });
 
@@ -43,7 +44,7 @@ const port= 4000;
   
     var mail = {
       from: email,
-      to: "mercanselin@gmail.com",//my regular email I used to sign up to mailtrap
+      to: "oerin.spanish@usc.edu",//my regular email I used to sign up to mailtrap
       subject: subject,
       text: message
     }
