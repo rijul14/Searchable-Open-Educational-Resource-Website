@@ -1,6 +1,7 @@
 import React from "react";
 import "./contactus.css"
 import axios from 'axios';
+import Button from '@mui/material/Button';
 
 export default class ContactUs extends React.Component {
     state = {
@@ -60,7 +61,10 @@ export default class ContactUs extends React.Component {
                                   //onChange= {this.onMsgChange.bind(this)}
                                   onChange={this.onMsgChange}/>
                             </div>
-                            <button className= "button" type="submit" id="button" >ENVIAR</button>
+                            <div style={{textAlign: "center"}}>
+                                <Button variant="outlined" type="submit" id="button">ENVIAR</Button>
+                            </div>
+                            {/* <button className= "button"  >ENVIAR</button> */}
                             </form>
                         </div>
                     </div>

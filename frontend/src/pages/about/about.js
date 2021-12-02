@@ -34,7 +34,7 @@ export default class About extends React.Component {
     render() {
         return (
             <div className="body-about">
-            <p>¿Quiénes somos?</p>
+            <p className="pt-5">¿Quiénes somos?</p>
             <div className="info-about">
                 <p>
                     OERinspanish es una plataforma de recursos educacionales en español gratuitos, 
@@ -52,42 +52,59 @@ export default class About extends React.Component {
             </div>
 
             <p>Contacto</p>
-            <div className="info-about">
-                <p>
-                    oerin.spanish@usc.edu
-                </p>
+            <div className="info-about" style={{marginTop: 0}}>
+                <a href="mailto:oerin.spanish@usc.edu">oerin.spanish@usc.edu</a>
             </div>
 
-            <p>Futuras Colaboraciones</p>
+            <p className="mt-4">Futuras Colaboraciones</p>
             <div className="info-about">
-                <p>
-                    Si tienen ideas, sugerencias o comentarios, por favor, contáctenos. oerinspanish@usc.edu
-                </p>
+                <p className="pb-5">Si tienen ideas, sugerencias o comentarios, por favor, contáctenos. oerinspanish@usc.edu</p>
             </div>
 
             <Dialog
-                    open={this.state.openOne}
-                    onClose={this.handleLinkOne}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                        {"Feliz en la Comunidad"}
-                    </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                        Feliz en la Comunidad es un programa de alcance comunitario que, desde 2014, 
-                        permite a los estudiantes de español de niveles intermedios y avanzados de la 
-                        Universidad de California del Sur colaborar con escuelas del área metropolitana de Los Ángeles.<br/><br/>
-                        A través de este programa de aprendizaje y servicio, los estudiantes practican español 
-                        y sus habilidades de liderazgo mientras establecen conexiones con vecindarios cultural y 
-                        socialmente diversos de Los Ángeles. Durante su participación, los estudiantes de USC 
-                        crean materiales que posteriormente son compartidos con <a class="inTextLink" onClick={this.handleLinkThree}>centros colaboradores</a>
-                        a través de nuestra plataforma o a través de visitas en persona a diversos centros colaboradores. <br/><br/>
- 	                    Los interesados podrán leer, descargar, copiar, imprimir o enlazar los textos completos de estas 
-                         unidades citando la fuente o autor/es.
-                        </DialogContentText>
-                    </DialogContent>
+                open={this.state.openOne}
+                onClose={this.handleLinkOne}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    Feliz en la Comunidad
+                </DialogTitle>
+                <div>
+                    <p className="ps-4 pe-4" style={{marginBottom: 0}} id="alert-dialog-description">
+                    Feliz en la Comunidad es un programa de alcance comunitario que, desde 2014, 
+                    permite a los estudiantes de español de niveles intermedios y avanzados de la 
+                    Universidad de California del Sur colaborar con escuelas del área metropolitana de Los Ángeles.<br/><br/>
+                    A través de este programa de aprendizaje y servicio, los estudiantes practican español 
+                    y sus habilidades de liderazgo mientras establecen conexiones con vecindarios cultural y 
+                    socialmente diversos de Los Ángeles. Durante su participación, los estudiantes de USC 
+                    crean materiales que posteriormente son compartidos con centros colaboradores
+                    a través de nuestra plataforma o a través de visitas en persona a diversos centros colaboradores. <br/><br/>
+                    Los interesados podrán leer, descargar, copiar, imprimir o enlazar los textos completos de estas 
+                    unidades citando la fuente o autor/es.
+                    </p>
+                </div>
+                    
+                <DialogTitle id="alert-dialog-title">
+                    Centros Colaboradores:
+                </DialogTitle>
+                <div className="ps-4 pe-4">
+                    <Link href="https://calcreative.org/about/us/">CALCREATIVE</Link>
+                    <br/><br/>
+
+                    <Link target="_blank" href="https://www.ednovate.org/hybrid">USC HYBRID HIGH SCHOOL</Link>
+                    <br/><br/>
+
+                    <Link target="_blank" href="https://www.gusd.net/muir">JOHN MUIR ELEMENTARY SCHOOL (GLENDALE)</Link>
+                    <br/><br/>
+
+                    <Link target="_blank" href="https://www.larchmontcharter.org/lfp-campus">LARCHMONT CHARTER SCHOOL (LAFAYETTE PARK CAMPUS)</Link>
+                    <br/><br/>
+
+                    <Link target="_blank" href="https://www.educacionyfp.gob.es/eeuu/en/convocatorias-programas/convocatorias-eeuu/isa.html">INTERNATIONAL SPANISH ACADEMY (LOS ÁNGELES)</Link>
+                    <br/><br/>
+                
+                </div>
                 </Dialog>
 
                 <Dialog
@@ -101,21 +118,7 @@ export default class About extends React.Component {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                        <Link href="https://calcreative.org/about/us/">CALCREATIVE</Link>
-                        {/* CALCREATIVE:<br/> */}
-                        {/* <br/><br/> */}
-
-                        <Link target="_blank" href="https://www.ednovate.org/hybrid">USC HYBRID HIGH SCHOOL</Link>
-                        <br/><br/>
-
-                        <Link target="_blank" href="https://www.gusd.net/muir">JOHN MUIR ELEMENTARY SCHOOL (GLENDALE)</Link>
-                        <br/><br/>
-
-                        <Link target="_blank" href="https://www.larchmontcharter.org/lfp-campus">LARCHMONT CHARTER SCHOOL (LAFAYETTE PARK CAMPUS)</Link>
-                        <br/><br/>
-
-                        <Link target="_blank" href="https://www.educacionyfp.gob.es/eeuu/en/convocatorias-programas/convocatorias-eeuu/isa.html">INTERNATIONAL SPANISH ACADEMY (LOS ÁNGELES)</Link>
-                        <br/><br/>
+                        
                         </DialogContentText>
                     </DialogContent>
                 </Dialog>

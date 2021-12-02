@@ -4,18 +4,18 @@
   width: 60%;
   margin-left: auto;
   margin-right: auto;
-  height: 900px;
   margin-bottom: 50px;
+  /* padding-top: 50px;
+  padding-bottom: 50px; */
 }
-.body-about p {
+.body-about {
   margin-top: 50px;
   font-size: 25pt;
 }
 .info-about {
   vertical-align: middle;
 }
-.body-about .info-about p {
-  margin-top: 50px;
+.body-about .info-about {
   font-size: 15pt;
   width: 90%;
   margin-left: auto;
