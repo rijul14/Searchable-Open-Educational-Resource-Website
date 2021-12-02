@@ -89,7 +89,7 @@ export default class About extends React.Component {
                     Centros Colaboradores:
                 </DialogTitle>
                 <div className="ps-4 pe-4">
-                    <Link href="https://calcreative.org/about/us/">CALCREATIVE</Link>
+                    <Link target="_blank" href="https://calcreative.org/about/us/">CALCREATIVE</Link>
                     <br/><br/>
 
                     <Link target="_blank" href="https://www.ednovate.org/hybrid">USC HYBRID HIGH SCHOOL</Link>
