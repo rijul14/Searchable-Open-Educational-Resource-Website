@@ -97,9 +97,10 @@ export default class ContactUs extends React.Component {
         console.log('submitting');
         e.preventDefault();
         axios({
-          method: "POST",
-          url:"https://75vsbghrpd.execute-api.us-west-2.amazonaws.com/Prod/contact_us",
-          data:  this.state
+            method: "POST",
+            url:"https://75vsbghrpd.execute-api.us-west-2.amazonaws.com/Prod/contact_us",
+            headers: {'Content-Type': 'text/plain'}, // not using json to avoid CORS preflight
+            data:  this.state
         }).then((response)=>{
           if (response.data.status === 'success'){
               alert("Message Sent.");

@@ -47,6 +47,14 @@ Resources:
       MemorySize: 128
       Timeout: 100
       Description: The contact us API endpoint.
+      Policies:
+        - Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'ses:SendEmail'
+                  - 'ses:SendRawEmail'
+                Resource: '*'
       Events:
         Api:
           Type: Api
