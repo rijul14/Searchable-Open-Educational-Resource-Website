@@ -60,11 +60,11 @@ exports.contact = async (event, context) => {
   const message = body.message;
 
   const mail = {
-    from: "contact@oerinspanish.org",
+    from: {name: name, address: "contact@oerinspanish.org"},
     replyTo: email,
     to: "oerin.spanish@usc.edu",
-    subject: `${name} <${email}> - ${subject}`,
-    text: message
+    subject: `[Contact Form] ${subject}`,
+    text: `Name: ${name}\nEmail: ${email}\nMessage:\n${message}`
   };
 
   try {
