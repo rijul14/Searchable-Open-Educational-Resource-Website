@@ -181,9 +181,9 @@ export default class Home extends React.Component {
           </Grid>
           <Grid item xs={9}>
             {/* bg-light */}
-            <div className="p-2 h-100">
+            <div className="resultsTitle">
               {this.state.searchResults.length > 0 ? (this.state.searchResults.slice(this.state.results_per_page * this.state.page, this.state.results_per_page * this.state.page + this.state.results_per_page).map((data, index) =>
-                  <Result key={index} data={data}/>)) : (<div>No se han encontrado resultados</div>) // empty result
+                  <Result key={index} data={data}/>)) : (<div>Lo sentimos. No se han encontrado resultados.</div>) // empty result
               }
               <Pagination count={parseInt(this.state.searchResults.length / this.state.results_per_page)}
                           color="standard" onChange={this.changePage}/>

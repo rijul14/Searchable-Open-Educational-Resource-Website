@@ -37,28 +37,25 @@ export default class About extends React.Component {
             <p className="pt-5">¿Quiénes somos?</p>
             <div className="info-about">
                 <p>
-                    OERinspanish es una plataforma de recursos educacionales en español gratuitos, 
-                    única en su género al ofrecer materiales creados tanto por estudiantes participantes 
-                    en el programa de servicio comunitario <a className="inTextLink" onClick={this.handleLinkOne}> Feliz en la Comunidad </a> como 
+                    OERinspanish es una plataforma de recursos educacionales 
+                    en español gratuitos, única en su género al ofrecer materiales
+                    creados tanto por estudiantes participantes en el programa de servicio 
+                    comunitario <a className="inTextLink" onClick={this.handleLinkOne}> Feliz en la Comunidad </a> como 
                     por <a className="inTextLink" onClick={this.handleLinkTwo} >instructores de la Universidad de California del Sur (USC)</a>.<br/><br/>
                     
-                    La esperanza detrás del proyecto es beneficiar a la comunidad más allá del entorno 
-                    universitario y permitir el intercambio de conocimientos fuera de los límites 
-                    tradicionales del aula de clase.<br/><br/>
+                    El proyecto, dirigido por las profesoras Mercedes Fages Agudo, Jamie Fudacz y 
+                    Liana Stepanyan, nace con la esperanza de beneficiar a la comunidad más allá del 
+                    entorno universitario y permitir el intercambio de conocimientos fuera de los límites tradicionales 
+                    del aula de clase.<br/><br/>
                     
-                    Los interesados podrán leer, descargar, copiar, 
-                    imprimir o enlazar los textos completos de estas unidades citando la fuente o autor/es.
+                    Los interesados podrán leer, descargar, copiar, imprimir o enlazar los textos 
+                    completos de estas unidades citando la fuente o autor/es.
                 </p>
-            </div>
-
-            <p>Contacto</p>
-            <div className="info-about" style={{marginTop: 0}}>
-                <a href="mailto:oerin.spanish@usc.edu">oerin.spanish@usc.edu</a>
             </div>
 
             <p className="mt-4">Futuras Colaboraciones</p>
             <div className="info-about">
-                <p className="pb-5">Si tienen ideas, sugerencias o comentarios, por favor, contáctenos. oerinspanish@usc.edu</p>
+                <p className="pb-5">Si tienen ideas, sugerencias o comentarios, por favor, contáctenos. <a href="mailto:oerin.spanish@usc.edu">oerin.spanish@usc.edu</a></p>
             </div>
 
             <Dialog
@@ -89,6 +86,9 @@ export default class About extends React.Component {
                     Centros Colaboradores:
                 </DialogTitle>
                 <div className="ps-4 pe-4">
+                    <Link target="_blank" href="https://dornsife.usc.edu/joint-educational-project">JOINT EDUCATIONAL PROJECT - USC</Link>
+                    <br/><br/>
+
                     <Link target="_blank" href="https://calcreative.org/about/us/">CALCREATIVE</Link>
                     <br/><br/>
 

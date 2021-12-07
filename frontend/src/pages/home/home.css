@@ -18,6 +18,7 @@
   /*min-height: 75vh;*/
   /*max-height: 100vh;*/
   height: 80vh;
+ 
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -26,9 +27,11 @@
 }
 
 .bg-bg {
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(1.5px);
   -webkit-backdrop-filter: blur(8px);
   height: 100%;
+  
+  
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -53,9 +56,9 @@
   z-index: 1;
   /*margin-top: 1%;*/
   /*margin-left: 10%;*/
-  width: 80%;
+  width: 60%;
   /*height: 100%;*/
-  padding: 20px 40px 40px;
+  padding: 20px 5px 40px;
   text-align: center;
   font-size: 1.5vw;
   border-radius: 999px;
@@ -67,39 +70,37 @@
 
 .bg-text .search {
   display:inline-block;
-  width: 10px;
-  font-size: 3vw;
+  font-size: 1vw;
   border-radius: 25px;
     border: 2px solid #575756;
     padding: 20px;
   z-index: 2;
-  width: 50%;
+  width: 40%;
   padding: 1px 1px;
   background-color: transparent;
   
 }
 
 .bg-text .search input{
-  position: relative;
-  right: 40px; 
-  font-size: 30px;
-  line-height: 18px; 
+  position:relative;
+  font-size: 2vw;
   text-align: left;
-  margin-left: 0px; 
+  z-index: 3;
   border:none;
   background-color: transparent;
   outline:none;
   
 }
 .bg-text .search button{
-    position: relative;
-    left: 50px;
-    bottom: 10px;
+    position: absolute;
+    display:inline-flex;
+    z-index:4;
+    right: 39%;
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-size: 40px 42px;
+    background-size: 80%;
     background-position: center;
-    padding: 25px 30px;
+    padding: 1.5% 2%;
     border: none;
     background-color: transparent;
     transition: all 250ms ease-in-out;
