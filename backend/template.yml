@@ -39,7 +39,28 @@ Resources:
           Properties:
             Path: /search
             Method: POST
-
+  contact:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/email.contact
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 100
+      Description: The contact us API endpoint.
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - 'ses:SendEmail'
+                - 'ses:SendRawEmail'
+              Resource: '*'
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /contact_us
+            Method: POST
   #  # This is a Lambda function config associated with the source code: get-all-items.js
   #  getAllItemsFunction:
   #    Type: AWS::Serverless::Function

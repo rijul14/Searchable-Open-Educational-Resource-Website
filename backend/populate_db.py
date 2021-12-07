@@ -54,7 +54,7 @@ from pathlib import Path
 # switch google drive locations to s3 locations
 import gdown
 s3 = boto3.resource('s3')
-bucket = s3.Bucket('oerinspanish.usc.edu')
+bucket = s3.Bucket('oerinspanish.org')
 
 fpath = Path('gdrive_files')
 fpath.mkdir(exist_ok=True)
@@ -65,7 +65,9 @@ for i, link in enumerate(df.location):
     mtype = mimetypes.guess_type(fname)[0]
     if mtype is None:
         mtype = 'binary/octet-stream'
-    resp = bucket.upload_file(fname, f"files/{fname}", ExtraArgs={'ContentType': mtype, 'ACL': "public-read"})
+        # if acl is enabled:
+#     resp = bucket.upload_file(fname, f"files/{fname}", ExtraArgs={'ContentType': mtype, 'ACL': "public-read"})
+    resp = bucket.upload_file(fname, f"files/{fname}", ExtraArgs={'ContentType': mtype})
 #     s3_link = f"https://{bucket.name}.s3.amazonaws.com/{urllib.parse.quote(fname)}"
     s3_link = f"/files/{urllib.parse.quote(fname)}"
     print(s3_link)
