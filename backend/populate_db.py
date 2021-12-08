@@ -1,6 +1,7 @@
 import mimetypes
 import os
 import urllib.parse
+import re
 
 import pandas as pd
 
@@ -14,6 +15,8 @@ tech_col_idx = df.columns.get_loc('TECHNOLOGY USED-Tecnología')
 df['AUTHOR-Autor(a)'] = df.iloc[:, [tech_col_idx - 3, tech_col_idx - 1]].apply(lambda row: ", ".join(filter(None, row)), axis=1)
 df['TECHNOLOGY USED-Tecnología'] = df.iloc[:, range(tech_col_idx, tech_col_idx + 3)] \
     .apply(lambda row: ", ".join(filter(None, row)), axis=1)  # join technology together
+df['TECHNOLOGY USED-Tecnología'] = df['TECHNOLOGY USED-Tecnología'].str.replace('Pear Deack', 'PearDeck', flags=re.I)
+df['TECHNOLOGY USED-Tecnología'] = df['TECHNOLOGY USED-Tecnología'].str.replace('Pear Deck', 'PearDeck', flags=re.I)
 
 df = df[headers]  # ignore none-links and n/a's
 rename_d = {n: n[:len(n) if '-' not in n else n.index('-')].replace(' ', '_').lower() for n in df.columns}

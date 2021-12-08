@@ -167,19 +167,21 @@ async function getDocs(ids, docClient, tableName) {
 
 async function enrichResults(res, docClient, tableName) {
 
-  let enrichedList = [];
+  const enrichedList = Array(res.length);
 
   const fromDbList = [];
+  const fromDbIdxList = [];
 
-  for (let x = 0, id; x < res.length; x++) {
+  for (let i = 0, id; i < res.length; i++) {
 
-    id = res[x];
+    id = res[i];
 
     const localDoc = getLocalDoc(id);
-    if (!localDoc) {
+    if (localDoc && i !== 1) {
+      enrichedList[i] = localDoc;
+    } else {
       fromDbList.push(id);
-    }else {
-      enrichedList.push(localDoc);
+      fromDbIdxList.push(i);
     }
   }
 
@@ -188,10 +190,11 @@ async function enrichResults(res, docClient, tableName) {
     if (!tableData){
       tableData = {};
     }
-    for (const doc of list){ // add to local cache
-      tableData[doc.id] = doc;
+    for (let i = 0; i < list.length; i++){
+      const doc = list[i];
+      tableData[doc.id] = doc; // add to local cache
+      enrichedList[fromDbIdxList[i]] = doc;
     }
-    enrichedList = enrichedList.concat(list);
   }
 
   return enrichedList;
