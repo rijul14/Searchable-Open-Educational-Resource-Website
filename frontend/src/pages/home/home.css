@@ -18,7 +18,7 @@
   /*min-height: 75vh;*/
   /*max-height: 100vh;*/
   height: 80vh;
- 
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,8 +30,8 @@
   backdrop-filter: blur(1.5px);
   -webkit-backdrop-filter: blur(8px);
   height: 100%;
-  
-  
+
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -73,13 +73,11 @@
   display:inline-block;
   font-size: 1vw;
   border-radius: 25px;
-    border: 2px solid #575756;
-    padding: 20px;
+  border: 2px solid #575756;
+  padding-left: 10px;
   z-index: 2;
   width: 40%;
-  padding: 1px 1px;
   background-color: transparent;
-  
 }
 
 .bg-text .search input{
@@ -90,7 +88,7 @@
   border:none;
   background-color: transparent;
   outline:none;
-  
+
 }
 .bg-text .search button{
     position: absolute;
@@ -113,5 +111,4 @@
     backface-visibility: hidden;
     /*transform-style: preserve-3d;*/
     /*margin-right:0px;*/
-  
 }
