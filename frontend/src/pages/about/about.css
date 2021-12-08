@@ -23,5 +23,6 @@
 }
 
 .inTextLink {
+  cursor: pointer;
   color: rgb(157, 0, 0);
 }
