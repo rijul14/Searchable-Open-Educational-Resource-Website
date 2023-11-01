@@ -112,3 +112,9 @@
     /*transform-style: preserve-3d;*/
     /*margin-right:0px;*/
 }
+
+@media all and (min-width:0px) and (max-width: 1000px) {
+  .bg-text {
+    font-size: 3vw;
+  }
+}
