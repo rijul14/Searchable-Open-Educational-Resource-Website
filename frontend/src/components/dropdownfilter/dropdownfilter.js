@@ -1,18 +1,13 @@
 import React from "react";
 import "./dropdownfilter.css";
+import Accordion from 'react-bootstrap/Accordion';
 
 export default class DropdownFilter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isOpen: false,
+            isOpen: true, 
         };
-    }
-
-    toggleDropdown = () => {
-        this.setState(prevState => ({
-            isOpen: !prevState.isOpen
-        }));
     }
 
     handleOptionChange = (option, checked) => {
@@ -23,29 +18,26 @@ export default class DropdownFilter extends React.Component {
 
     render() {
         const { category, options, checkedStates } = this.props;
-        const { isOpen } = this.state;
 
         return (
-            <div className="dropdown-container">
-                <div onClick={this.toggleDropdown} className="dropdown-header">
-                    {category}
-                </div>
-                {isOpen && (
-                    <div className="dropdown-options">
-                        {options.map((option, index) => (
-                            <div key={index}>
-                                <input
-                                    checked={checkedStates && checkedStates.includes(option === "Formulario de Google" ? "Google Form" : option)}
-                                    onChange={(e) => this.handleOptionChange(option, e.currentTarget.checked)}
-                                    className="input"
-                                    type="checkbox"
-                                />
-                                {option}
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
+                <Accordion alwaysOpen>
+                    <Accordion.Item eventKey="0">
+                        <Accordion.Header>{category}</Accordion.Header>
+                        <Accordion.Body>
+                            {options.map((option, index) => (
+                                <div key={index}>
+                                    <input
+                                        checked={checkedStates && checkedStates.includes(option === "Formulario de Google" ? "Google Form" : option)}
+                                        onChange={(e) => this.handleOptionChange(option, e.currentTarget.checked)}
+                                        className="input"
+                                        type="checkbox"
+                                    />
+                                    {option}
+                                </div>
+                            ))}
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
         );
     }
 }
