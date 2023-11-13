@@ -4,7 +4,6 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/home/home";
 import ContactUs from "./pages/contact_us/contact_us";
 import About from "./pages/about/about";
-import Header from "./components/header/header";
 import Search from "./pages/search/search";
 import Footer from "./components/footer/footer";
 import Navbar from "react-bootstrap/Navbar";
@@ -13,15 +12,15 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
-import {BrowserRouter as Router, Link, Redirect, Route, Switch, useHistory,} from "react-router-dom";
-
+import { BrowserRouter as Router, Link, Redirect, Route, Switch, useHistory, } from "react-router-dom";
+import Logo from "./components/logo/logo";
 
 function App() {
     const history = useHistory();
 
     useEffect(() => {
         document.title = "Oerinspanish"
-      }, [])
+    }, [])
 
     const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -30,29 +29,16 @@ function App() {
 
     return (
         <div className="App">
-            <Header />
             <Router history={history}>
-                <Navbar collapseOnSelect expand="lg" class="navbar">
-                    <Container>
-                        {/* <Navbar.Brand
-                            className="logo"
-                            as={Link}
-                            to={"/home"}
-                            style={{ marginLeft: "100px", fontSize: "15pt" }}
-                        >
-                            oerinspanish
-                        </Navbar.Brand> */}
-                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                        <Navbar.Collapse id="responsive-navbar-nav">
-                            <Nav className="me-auto">
-                                <Nav.Link as={Link} to={"/home"}>
-                                    oerinspanish
-                                </Nav.Link>
-                            </Nav>
-                            <Nav>
-                                <Nav.Link as={Link} to={"/home"}>
-                                    principal
-                                </Nav.Link>
+                <Navbar justify collapseOnSelect expand="lg" variant="dark" class="navbar" style={{ backgroundColor: "rgb(120, 26, 15)", flexWrap: "wrap" }}>
+                    <Container className="mx-2 border-bottom" fluid>
+                        <Navbar.Brand as={Link} to={"/home"} className="text-white me-auto"  class="align-content-start">Oerinspanish</Navbar.Brand>
+                        <Navbar.Brand as={Link} to={"/home"} className="ms-2">
+                            <Logo />
+                        </Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="ml-auto" class="align-content-end" />
+                        <Navbar.Collapse id="responsive-navbar-nav" className="ml-auto">
+                            <Nav className="ms-auto">
                                 <Nav.Link as={Link} to={"/search"}>
                                     buscar
                                 </Nav.Link>
@@ -112,7 +98,7 @@ function App() {
                 </div>
             </Router>
             <Footer />
-        </div>
+        </div >
 
     );
 }
