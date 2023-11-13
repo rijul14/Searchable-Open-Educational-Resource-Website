@@ -113,8 +113,18 @@
     /*margin-right:0px;*/
 }
 
-@media all and (min-width:0px) and (max-width: 1000px) {
+@media all and (max-width: 767px) { 
   .bg-text {
-    font-size: 3vw;
+    width: 80%; 
+    padding: 20px 5px; 
+    font-size: 4vw; 
+  }
+  
+  .bg-text .title-home {
+    font-size: 8vw; 
+  }
+  
+  .bg-text .search input {
+    font-size: 3.5vw; 
   }
 }
