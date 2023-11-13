@@ -4,6 +4,7 @@ import Result from "../../components/result/result"
 import Grid from "@mui/material/Grid";
 import Pagination from "@mui/material/Pagination";
 import Category from "../../components/search/category";
+import DropdownFilter from "../../components/dropdownfilter/dropdownfilter";
 import qs from "qs";
 
 export default class Home extends React.Component {
@@ -171,17 +172,44 @@ export default class Home extends React.Component {
                        onKeyDown={this.checkEnter}/>
                 <button onClick={this.startSearch} className="btn btn-primary searchButton">Search</button>
               </div>
-              <Category onChange={this.setSearchTechnologyUsed} category="Tecnología" checkedStates={this.state.technology_used}
-                        options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]} />
-              <Category onChange={this.setSearchLevel} category="Nivel" checkedStates={this.state.level}
-                        options={["BÁSICO", "INTERMEDIO", "AVANZADO"]}/>
-              <Category onChange={this.setSearchSkills} category="Destrezas" checkedStates={this.state.skills}
-                        options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}/>
+                <div className="default-filter">
+                  <Category onChange={this.setSearchTechnologyUsed} category="Tecnología" checkedStates={this.state.technology_used}
+                            options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]} />
+                  <Category onChange={this.setSearchLevel} category="Nivel" checkedStates={this.state.level}
+                            options={["BÁSICO", "INTERMEDIO", "AVANZADO"]}/>
+                  <Category onChange={this.setSearchSkills} category="Destrezas" checkedStates={this.state.skills}
+                            options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}/>
+                </div>
+                <div className="dropdown-filter">
+                  <DropdownFilter
+                    category="Tecnología"
+                    options={["Video", "Peardeck", "Formulario de Google", "Quizlet"]}
+                    onChange={this.setSearchTechnologyUsed}
+                    checkedStates={this.state.technology_used}
+                  />
+                  <DropdownFilter
+                    category="Nivel"
+                    options={["BÁSICO", "INTERMEDIO", "AVANZADO"]}
+                    onChange={this.setSearchLevel}
+                    checkedStates={this.state.level}
+                  />
+                  <DropdownFilter
+                    category="Destrezas"
+                    options={["Comprensión auditiva", "Conversación", "Escritura", "Lectura"]}
+                    onChange={this.setSearchSkills}
+                    checkedStates={this.state.skills}
+                  />
+                </div>
             </div>
           </Grid>
           <Grid item xs={9}>
             {/* bg-light */}
+            
             <div className="resultsTitle">
+              <div className="resultsText">
+                    Resultados <br/>
+              </div>
+
               {this.state.searchResults.length > 0 ? (this.state.searchResults.slice(this.state.results_per_page * this.state.page, this.state.results_per_page * this.state.page + this.state.results_per_page).map((data, index) =>
                   <Result key={index} data={data}/>)) : (<div>Lo sentimos. No se han encontrado resultados.</div>) // empty result
               }
