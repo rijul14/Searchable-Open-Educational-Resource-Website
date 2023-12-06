@@ -1,4 +1,5 @@
 {
+  "start": "react-scripts --openssl-legacy-provider start", 
   "name": "website",
   "version": "1.0.0",
   "description": "",

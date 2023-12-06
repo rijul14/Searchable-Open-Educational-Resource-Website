@@ -31,7 +31,7 @@ export default class ContactUs extends React.Component {
                                 method="POST">
                             <div className="form-group">
                             <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-md-6 mb-4 mb-md-0">
                                 <input placeholder = "Nombre"  id="name" type="text"
                                    className="form-control" required value={this.state.name}
                                    //onChange={this.onNameChange.bind(this)}/>

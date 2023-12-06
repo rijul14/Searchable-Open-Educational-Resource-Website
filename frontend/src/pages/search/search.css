@@ -17,6 +17,29 @@
 }
 
 .resultsTitle{
-  margin-top:10vw;
+  margin-top:6vw;
   text-align:center;
 }
+
+.resultsText{
+  font-size: clamp(16px, 2vw, 24px);
+  margin-left: 20px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.dropdown-filter {
+  display: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .default-filter {
+    display: none;
+  }
+
+  .dropdown-filter {
+    display: block;
+  }
+}
+
