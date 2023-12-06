@@ -13,7 +13,7 @@ export default class Header extends React.Component {
                          <p class="deptBody2">oerin.spanish@usc.edu<br />
                         </p>
                         {/* Mobile Header Info */}
-                        <p class="mobileHeader deptTitle">Oerinspanish</p>
+                        <p style="font-family: 'Trebuchet MS', sans-serif;" class="mobileHeader deptTitle">Oerinspanish</p>
                     </div>
                     <div class="col twoo">
                     <img src={USClogo} alt="logo"height={150}/>

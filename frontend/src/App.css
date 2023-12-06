@@ -1,3 +1,4 @@
+@import url("https://use.typekit.net/kfg2wkt.css");
 .App {
   display: flex;
   min-height: 100vh;
@@ -44,4 +45,9 @@ body {
   .logo-container img {
       src: "./img/USC_large.png";
   }
+}
+
+.aFont{
+  font-family: adobe-caslon-pro, serif;
+  font-weight: bold;
 }

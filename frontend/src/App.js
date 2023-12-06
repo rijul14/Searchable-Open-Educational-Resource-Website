@@ -32,7 +32,7 @@ function App() {
             <Router history={history}>
                 <Navbar justify collapseOnSelect expand="lg" variant="dark" class="navbar" style={{ backgroundColor: "rgb(120, 26, 15)", flexWrap: "wrap" }}>
                     <Container className="mx-2 border-bottom" fluid>
-                        <Navbar.Brand as={Link} to={"/home"} className="text-white me-auto"  class="align-content-start">Oerinspanish</Navbar.Brand>
+                        <Navbar.Brand as={Link} to={"/home"} className="me-auto aFont" class="align-content-start">Oerinspanish</Navbar.Brand>
                         <Navbar.Brand as={Link} to={"/home"} className="ms-2">
                             <Logo />
                         </Navbar.Brand>
