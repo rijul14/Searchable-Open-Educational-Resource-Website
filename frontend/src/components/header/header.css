@@ -1,4 +1,4 @@
-@import url("https://use.typekit.net/kfg2wkt.css");
+
 .header {
   /*padding: 20px;*/
   width: 100%;
@@ -42,3 +42,30 @@
   height: auto;
   float: right;
 }
+
+/* This hides the detailed header info on screens smaller than 768px (typical breakpoint for mobile devices) */
+@media (max-width: 767px) {
+  .deptTitle, .deptBody, .deptBody2 {
+      display: none;
+  }
+
+  .mobileHeader {
+      display: block;
+      margin-top: 6%;
+      margin-left: 20px;
+      color: white;
+      font-size: 6vw;
+      margin-bottom: 0px;
+      font-family: adobe-caslon-pro, serif;
+      font-weight: 500;
+      font-style: normal;
+  }
+}
+
+/* This hides the mobile header info on screens larger than 767px */
+@media (min-width: 768px) {
+  .mobileHeader {
+      display: none;
+  }
+}
+

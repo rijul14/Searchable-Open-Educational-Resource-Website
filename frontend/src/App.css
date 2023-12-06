@@ -1,8 +1,10 @@
+@import url("https://use.typekit.net/kfg2wkt.css");
 .App {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
 }
+
 html,
 body {
   overflow-x: hidden;
@@ -14,16 +16,38 @@ body {
 
 .navbar {
   background-color: rgb(255, 255, 255);
-  font-size: 1.3vw;
-  border-bottom: 2px solid rgb(19, 19, 19);
+  font-size: 1rem;
+  border-bottom: 1px solid rgb(19, 19, 19);
   right: 0px;
   margin: 0px;
   padding: 0px;
-  color: black;
+  color: rgb(255, 255, 255);
   letter-spacing: 1pt;
 }
 
 .navbar a {
-  color: black !important;
+  color: rgb(255, 255, 255) !important;
   font-weight: 400;
+}
+
+.logo-container {
+  padding: 0px;
+  margin: 0px;
+}
+
+@media (max-width: 768px) {
+  .logo-container img {
+      src: "./img/USC_small.png";
+  }
+}
+
+@media (min-width: 768px) {
+  .logo-container img {
+      src: "./img/USC_large.png";
+  }
+}
+
+.aFont{
+  font-family: adobe-caslon-pro, serif;
+  font-weight: bold;
 }

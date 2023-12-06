@@ -112,3 +112,19 @@
     /*transform-style: preserve-3d;*/
     /*margin-right:0px;*/
 }
+
+@media all and (max-width: 767px) { 
+  .bg-text {
+    width: 80%; 
+    padding: 20px 5px; 
+    font-size: 4vw; 
+  }
+  
+  .bg-text .title-home {
+    font-size: 8vw; 
+  }
+  
+  .bg-text .search input {
+    font-size: 3.5vw; 
+  }
+}
